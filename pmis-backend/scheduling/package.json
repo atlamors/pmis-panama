@@ -1,0 +1,13 @@
+{
+  "name": "@pmis-backend/scheduling",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "echo 'scheduling dev stub' && sleep 1",
+    "build": "echo 'scheduling build stub'",
+    "test": "echo 'scheduling test stub'",
+    "clean": "rimraf bin obj node_modules"
+  }
+}
+
+

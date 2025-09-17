@@ -1,0 +1,29 @@
+{
+    "name": "@pmis/monorepo",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "dev": "turbo run dev",
+        "dev:fe": "turbo run dev --filter=@pmis-frontend/*",
+        "dev:be": "turbo run dev --filter=@pmis-backend/*",
+        "build": "turbo run build",
+        "build:fe": "turbo run build --filter=@pmis-frontend/*",
+        "build:be": "turbo run build --filter=@pmis-backend/*",
+        "test": "turbo run test",
+        "test:fe": "turbo run test --filter=@pmis-frontend/*",
+        "test:be": "turbo run test --filter=@pmis-backend/*",
+        "clean": "turbo run clean && rimraf node_modules pmis-frontend/**/node_modules pmis-backend/**/node_modules",
+        "install:all": "npm install --workspaces",
+        "ci:all": "npm ci --workspaces",
+        "reinstall:all": "npm run clean && npm install --workspaces"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "private": "true",
+    "workspaces": [
+        "pmis-frontend/*",
+        "pmis-backend/*"
+    ]
+}

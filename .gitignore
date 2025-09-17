@@ -1,0 +1,47 @@
+# Node / JS
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.tsbuildinfo
+
+# Turborepo
+.turbo/
+
+# Angular
+.angular/
+.angular/cache/
+dist/
+coverage/
+pmis-frontend/**/dist/
+pmis-frontend/**/coverage/
+
+# .NET
+**/bin/
+**/obj/
+**/.vs/
+*.user
+*.suo
+TestResults/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+logs/**
+
+

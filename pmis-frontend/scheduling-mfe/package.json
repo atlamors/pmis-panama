@@ -1,0 +1,13 @@
+{
+  "name": "@pmis-frontend/scheduling-mfe",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "echo 'scheduling-mfe dev stub' && sleep 1",
+    "build": "echo 'scheduling-mfe build stub'",
+    "test": "echo 'scheduling-mfe test stub'",
+    "clean": "rimraf dist node_modules"
+  }
+}
+
+

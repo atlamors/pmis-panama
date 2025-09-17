@@ -1,0 +1,13 @@
+{
+  "name": "@pmis-backend/api-gateway",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "echo 'api-gateway dev stub' && sleep 1",
+    "build": "echo 'api-gateway build stub'",
+    "test": "echo 'api-gateway test stub'",
+    "clean": "rimraf bin obj node_modules"
+  }
+}
+
+

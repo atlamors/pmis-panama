@@ -1,0 +1,13 @@
+{
+  "name": "@pmis-frontend/host",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "echo 'host dev stub' && sleep 1",
+    "build": "echo 'host build stub'",
+    "test": "echo 'host test stub'",
+    "clean": "rimraf dist node_modules"
+  }
+}
+
+
