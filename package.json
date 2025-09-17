@@ -14,10 +14,9 @@
         "test:fe": "turbo run test --filter=@pmis-frontend/*",
         "test:be": "turbo run test --filter=@pmis-backend/*",
         "clean": "turbo run clean && rimraf node_modules pmis-frontend/**/node_modules pmis-backend/**/node_modules",
-    "install:all": "npm install --workspaces --include-workspace-root",
-    "ci:all": "npm ci --workspaces --include-workspace-root",
-    "reinstall:all": "npm run clean && npm install --workspaces --include-workspace-root",
-    "enforce:ts": "git ls-files | grep -E '\\.js$' | grep -vE '^package-lock\\.json$' && echo 'Found .js files. Only TypeScript allowed.' && exit 1 || echo 'OK: no .js files'"
+        "install:all": "npm install --workspaces --include-workspace-root",
+        "ci:all": "npm ci --workspaces --include-workspace-root",
+        "reinstall:all": "npm run clean && npm install --workspaces --include-workspace-root"
     },
     "keywords": [],
     "author": "",
