@@ -1,0 +1,23 @@
+---
+description: Enforce AGENTS.md awareness and priority rules
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# Rule
+Agents must always reference an `AGENTS.md` file before taking any action.
+
+# Priority Hierarchy
+1. **Project-level AGENTS.md files take precedence over the root AGENTS.md.**
+   - If an `AGENTS.md` file exists in the same project, package, or service directory as the file being worked on, that file governs the request.
+2. **If no project-level AGENTS.md is present, fall back to the nearest ancestor.**
+   - Walk upward through parent directories until an `AGENTS.md` is found.
+3. **If multiple AGENTS.md files exist, the one closest in the directory tree to the target file always wins.**
+   - Closeness is determined strictly by directory depth.
+4. **The root-level AGENTS.md applies only when no more specific file is found.**
+   - It serves as the global default baseline for the entire monorepo.
+
+# Enforcement
+- These rules are absolute and must not be bypassed.  
+- Specificity always overrides generality.  
+- Root AGENTS.md is a fallback, never a replacement for a more specific file.

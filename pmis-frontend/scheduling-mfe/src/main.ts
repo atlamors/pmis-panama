@@ -1,4 +1,5 @@
-// Placeholder entry for Angular scheduling MFE
-console.log("Scheduling MFE starting...");
+import { initFederation } from '@angular-architects/module-federation';
 
-
+initFederation({})
+    .then(() => import('./bootstrap'))
+    .catch(err => console.error('initFederation(remote) failed', err));
