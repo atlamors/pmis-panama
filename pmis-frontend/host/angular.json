@@ -18,10 +18,14 @@
                         "tsConfig": "tsconfig.app.json",
                         "inlineStyleLanguage": "css",
                         "assets": [
-                            "src/assets"
+                            {
+                                "input": "src/assets",
+                                "glob": "**/*",
+                                "ignore": [],
+                                "output": "assets"
+                            }
                         ],
-                        "styles": [
-                        ],
+                        "styles": [],
                         "scripts": [],
                         "customWebpackConfig": {
                             "path": "webpack.config.cjs"
@@ -45,7 +49,10 @@
                     "options": {
                         "buildTarget": "host:build",
                         "port": 4200,
-                        "proxyConfig": "proxy.conf.json"
+                        "proxyConfig": "proxy.conf.json",
+                        "hmr": false,
+                        "liveReload": true,
+                        "watch": true
                     },
                     "configurations": {
                         "production": {

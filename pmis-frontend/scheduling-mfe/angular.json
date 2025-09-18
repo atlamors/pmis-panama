@@ -46,7 +46,10 @@
                     "builder": "@angular-builders/custom-webpack:dev-server",
                     "options": {
                         "buildTarget": "scheduling-mfe:build",
-                        "port": 4201
+                        "port": 4201,
+                        "hmr": false,
+                        "liveReload": false,
+                        "watch": true
                     },
                     "configurations": {
                         "production": {

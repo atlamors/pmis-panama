@@ -1,5 +1,8 @@
-import { initFederation } from '@angular-architects/module-federation';
+import 'zone.js';
+import { initFederation } from '@angular-architects/module-federation/runtime';
 
-initFederation('assets/mf.manifest.json')
-    .then(() => import('./bootstrap'))
+const manifestUrl = '/assets/mf.manifest.json';
+
+initFederation(manifestUrl)
+    .then(() => import('./main.bootstrap'))
     .catch(err => console.error('initFederation(host) failed', err));

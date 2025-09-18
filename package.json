@@ -17,7 +17,10 @@
         "install:all": "pnpm -r install",
         "ci:all": "pnpm -r install --frozen-lockfile",
         "reinstall:all": "pnpm -r clean && pnpm -r install",
-        "enforce:ts": "git ls-files | grep -E '\\.js$' | grep -vE 'package-lock\\.json|webpack\\.config\\.cjs|tailwind\\.config\\.cjs|module-federation\\.config\\.(cjs|js)$' && echo 'Found .js files. Only TypeScript allowed.' && exit 1 || echo 'OK: no .js files'"
+        "enforce:ts": "git ls-files | grep -E '\\.js$' | grep -vE 'package-lock\\.json|webpack\\.config\\.cjs|tailwind\\.config\\.cjs|module-federation\\.config\\.(cjs|js)$' && echo 'Found .js files. Only TypeScript allowed.' && exit 1 || echo 'OK: no .js files'",
+        "build:prod:fe": "turbo run build:prod --filter=@pmis-frontend/*",
+        "serve:prod:fe": "turbo run serve:prod --filter=@pmis-frontend/*",
+        "preview:fe": "pnpm run build:prod:fe && pnpm run serve:prod:fe"
     },
     "keywords": [],
     "author": "",
@@ -28,11 +31,11 @@
         "pmis-frontend/*",
         "pmis-backend/*"
     ],
-  "pnpm": {
-    "overrides": {
-      "@module-federation/runtime-core": "0.6.21"
-    }
-  },
+    "pnpm": {
+        "overrides": {
+            "@module-federation/runtime-core": "0.6.21"
+        }
+    },
     "devDependencies": {
         "rimraf": "^6.0.1",
         "turbo": "^2.5.6"
