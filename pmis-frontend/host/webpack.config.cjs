@@ -16,4 +16,7 @@ module.exports = withModuleFederationPlugin({
         'rxjs': { singleton: true, strictVersion: true, requiredVersion: '7.8.2' },
         // do NOT share zone.js
     },
+    devServer: {
+        historyApiFallback: true,
+    },
 });

@@ -1,0 +1,95 @@
+# PMIS Overview
+
+PMIS is a **Port Management Information System** built with a **micro-frontend** Angular UI and **microservice** .NET backend, connected through an API Gateway.
+
+```mermaid
+---
+config:
+  layout: dagre
+  theme: mc
+---
+flowchart LR
+  subgraph FE["Frontend"]
+    host["Angular Host App"]
+    mfe1["Scheduling MFE"]
+  end
+  subgraph SVC[".NET Core Services"]
+    sched["Scheduling Service"]
+    auth["Auth Service"]
+  end
+  subgraph BE["Backend"]
+    gw["API Gateway"]
+    SVC
+  end
+  user["Operator / User"] -- HTTPS --> browser["Browser"]
+  browser --> host
+  host -- Module Federation --> mfe1
+  host -- REST/JSON --> gw
+  mfe1 -- REST/JSON --> gw
+  gw --> sched & auth
+  sched --> db[("Azure SQL")]
+  auth --> db
+  sched -- Events / telemetry --> obs[("Observability")]
+```
+
+---
+
+## Quick Start
+
+<Cards>
+  <Card title="Getting Started" href="./guides/getting-started" arrow className="!bg-transparent" icon={<span>🚀</span>}>
+    Install & run locally.
+  </Card>
+  <Card title="Architecture" href="./guides/architecture" arrow className="!bg-transparent" icon={<span>🏗️</span>}>
+    System overview and tech stack.
+  </Card>
+  <Card title="API Reference" href="./reference/overview" arrow className="!bg-transparent" icon={<span>📚</span>}>
+    Gateway and services.
+  </Card>
+</Cards>
+
+## Services
+
+<Cards num={2}>
+  <Card title="Scheduling Service" href="./reference/scheduling" arrow className="!bg-transparent" icon={<span>🗓️</span>}>
+    Core scheduling functions.
+  </Card>
+  <Card title="API Gateway" href="./reference/gateway" arrow className="!bg-transparent" icon={<span>🛣️</span>}>
+    Single entrypoint.
+  </Card>
+</Cards>
+
+## Development
+
+<Cards>
+  <Card title="Local Development" href="./guides/development" arrow className="!bg-transparent" icon={<span>💻</span>}>
+    Dev workflow and commands.
+  </Card>
+  <Card title="Deployment" href="./guides/deployment" arrow className="!bg-transparent" icon={<span>🚢</span>}>
+    Build and deploy.
+  </Card>
+</Cards>
+
+
+---
+
+## Local Defaults
+
+* **Ports (all environments):**
+
+  * Host → `:4200`
+  * Scheduling MFE → `:4201`
+* **API Gateway:** `/api/*` (served by backend gateway)
+* **Module Federation manifest:** host serves `/assets/mf.manifest.json` as the single source of truth for remote URLs.
+
+---
+
+## What’s Inside
+
+* **Frontend**: Angular 20, Module Federation, Tailwind CSS (v4)
+* **Backend**: ASP.NET Core 8, EF Core, YARP gateway
+* **Docs**: Nextra + MDX, with Mermaid diagrams
+
+
+
+

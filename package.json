@@ -20,7 +20,10 @@
         "enforce:ts": "git ls-files | grep -E '\\.js$' | grep -vE 'package-lock\\.json|webpack\\.config\\.cjs|tailwind\\.config\\.cjs|module-federation\\.config\\.(cjs|js)$' && echo 'Found .js files. Only TypeScript allowed.' && exit 1 || echo 'OK: no .js files'",
         "build:prod:fe": "turbo run build:prod --filter=@pmis-frontend/*",
         "serve:prod:fe": "turbo run serve:prod --filter=@pmis-frontend/*",
-        "preview:fe": "pnpm run build:prod:fe && pnpm run serve:prod:fe"
+        "preview:fe": "pnpm run build:prod:fe && pnpm run serve:prod:fe",
+        "docs:install": "pnpm --filter @pmis/docs install",
+        "docs": "pnpm --filter @pmis/docs run dev",
+        "build:docs": "pnpm --filter @pmis/docs run build"
     },
     "keywords": [],
     "author": "",
@@ -29,7 +32,8 @@
     "packageManager": "pnpm@9.12.0",
     "workspaces": [
         "pmis-frontend/*",
-        "pmis-backend/*"
+        "pmis-backend/*",
+        "pmis-docs"
     ],
     "pnpm": {
         "overrides": {

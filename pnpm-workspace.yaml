@@ -1,4 +1,5 @@
 packages:
   - 'pmis-frontend/*'
   - 'pmis-backend/*'
+  - 'pmis-docs'
 

@@ -1,46 +1,11 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>PMIS Host</title>
-    <base href="/">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-  </head>
-  <body class="bg-gray-950 text-gray-100">
-    <app-root></app-root>
-  </body>
-  <script>
-    (function () {
-      const menuButton = document.getElementById('menuButton');
-      const drawer = document.getElementById('drawer');
-      const backdrop = drawer && drawer.querySelector('[data-backdrop]');
-      const closeBtn = drawer && drawer.querySelector('[data-close]');
-      function closeDrawer() {
-        if (!drawer) return;
-        drawer.classList.add('hidden');
-        menuButton && menuButton.setAttribute('aria-expanded', 'false');
-      }
-      function openDrawer() {
-        if (!drawer) return;
-        drawer.classList.remove('hidden');
-        menuButton && menuButton.setAttribute('aria-expanded', 'true');
-      }
-      document.addEventListener('click', function (e) {
-        if (e.target && (e.target.id === 'menuButton')) {
-          e.preventDefault();
-          drawer && drawer.classList.contains('hidden') ? openDrawer() : closeDrawer();
-        }
-        if (e.target && (e.target.hasAttribute('data-backdrop') || e.target.hasAttribute('data-close'))) {
-          closeDrawer();
-        }
-      });
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') {
-          closeDrawer();
-        }
-      });
-    })();
-  </script>
+    <head>
+        <meta charset="utf-8" />
+        <title>PMIS Host</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+    </head>
+    <body class="bg-bg text-text text-[14px] leading-[1.5] font-sans">
+        <app-root></app-root>
+    </body>
 </html>
-

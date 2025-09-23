@@ -1,0 +1,31 @@
+# API Gateway
+
+The API Gateway serves as the single entry point for all API requests in the PMIS system.
+
+## Interactive API Reference
+
+<Callout type="important">
+The interactive reference requires the gateway running locally.
+</Callout>
+
+<ScalarApiReference url={`${process.env.NEXT_PUBLIC_PMIS_GATEWAY_URL}/scalar`} title="API Gateway" height="800px" />
+
+## Routing
+
+The gateway routes requests to appropriate microservices:
+
+- `/api/scheduling/*` → Scheduling Service (port 5001)
+- `/health` → Gateway health check
+
+## Development
+
+To run the API gateway locally:
+
+```bash
+cd pmis-backend/api-gateway
+dotnet run
+```
+
+The gateway will be available at http://localhost:5000
+
+

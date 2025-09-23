@@ -1,0 +1,168 @@
+# Developer Runbook
+
+The runbook covers **daily workflows**, **preview builds**, and **common issues** for working on PMIS.
+
+---
+
+## Startup (Development)
+
+1. **Install dependencies**
+
+   ```bash
+   pnpm install
+   ```
+
+2. **Start the frontend (host + MFEs)**
+
+   ```bash
+   pnpm run dev:fe
+   ```
+
+   * Host runs at [http://localhost:4200](http://localhost:4200)
+   * Scheduling MFE lazy-loads at `/scheduling`
+
+3. **Start the backend (gateway + services)**
+
+   ```bash
+   pnpm run dev:be
+   ```
+
+   * API Gateway: [http://localhost:5000](http://localhost:5000)
+
+> 💡 All frontend requests go through the **API Gateway** at `/api/*`.
+
+---
+
+## Run each app in its own console
+
+<Callout type="note">
+Open a separate terminal per app and run the filtered dev command.
+</Callout>
+
+### Frontend
+
+Host (Angular shell):
+```bash
+pnpm --filter @pmis-frontend/host dev
+```
+
+Scheduling MFE:
+```bash
+pnpm --filter @pmis-frontend/scheduling-mfe dev
+```
+
+### Backend
+
+API Gateway (dev stub):
+```bash
+pnpm --filter @pmis-backend/api-gateway dev
+```
+
+Scheduling Service (dev stub):
+```bash
+pnpm --filter @pmis-backend/scheduling dev
+```
+
+### Documentation
+```bash
+pnpm --filter @pmis/docs run dev
+```
+
+---
+
+## Preview / Production Mode
+
+Build and serve static bundles to simulate a deployed environment:
+
+```bash
+pnpm run preview:fe
+pnpm run preview:be
+```
+
+* Host: [http://localhost:5000](http://localhost:5000)
+* Scheduling MFE: [http://localhost:5001](http://localhost:5001)
+
+Notes:
+
+* SPA fallback ensures deep links (`/settings`, `/scheduling`) work.
+* CORS is enabled on remotes during preview (`serve -s ... -C`).
+
+---
+
+## Federation Manifest
+
+* The **manifest is the only source of truth** for remote URLs.
+* Location: `host/src/assets/mf.manifest.json`
+* Example (dev):
+
+  ```json
+  {
+    "scheduling": "http://localhost:4201/remoteEntry.js"
+  }
+  ```
+* Example (preview):
+
+  ```json
+  {
+    "scheduling": "http://localhost:5001/remoteEntry.js"
+  }
+  ```
+* Update the manifest, rebuild host, and restart servers to apply changes.
+
+---
+
+## Troubleshooting
+
+### ❌ RemoteEntry.js 404
+
+* Check that the remote dev or preview server is running.
+* Verify `mf.manifest.json` points to the correct port.
+
+### ❌ CORS error
+
+* For preview/prod, ensure remotes are served with `-C` flag (`serve -s dist/... -C`).
+* Dev mode should not require CORS (all via localhost).
+
+### ❌ Infinite reload in dev
+
+* Ensure **remotes** have HMR and LiveReload disabled in `angular.json`.
+* Only the **host** injects a dev-server client.
+
+### ❌ Styling not applied (Tailwind CSS v4)
+
+* Verify each app includes `src/styles.css` in its `angular.json -> build.options.styles`.
+* Tailwind v4 uses a single import in your global stylesheet:
+
+  ```css
+  @import "tailwindcss";
+  ```
+* Ensure Tailwind content globs in each app’s `tailwind.config.cjs` are scoped locally:
+
+  ```js
+  module.exports = {
+    content: ['./src/**/*.{html,ts}'],
+    theme: { extend: {} },
+    plugins: []
+  }
+  ```
+
+---
+
+## Clean & Reset
+
+If builds get stuck or caches are stale:
+
+```bash
+pnpm clean
+pnpm install
+```
+
+This removes `dist/` and `node_modules` folders across all projects and reinstalls fresh.
+
+---
+
+## Backlog / Future Improvements
+
+* **Cross-module HMR**: Host hot module reload with MF pre-init (not implemented; full reload used today).
+* **Shared frontend libraries**: `@pmis-frontend/ui`, `@pmis-frontend/api` for shared components and API clients.
+* **Auth & observability**: integrate with Auth Service and centralized logging/telemetry via API Gateway.

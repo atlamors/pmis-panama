@@ -8,7 +8,7 @@
         "dev": "ng analytics off && ng serve --host 0.0.0.0 --port 4201",
         "build": "ng build",
         "build:prod": "ng build -c production",
-        "serve:prod": "serve -s dist/scheduling-mfe -l 5002 -C",
+        "serve:prod": "serve -s dist/scheduling-mfe -l 4201 -C",
         "preview:prod": "pnpm run build:prod && pnpm run serve:prod",
         "test": "ng test",
         "lint": "ng lint || true",

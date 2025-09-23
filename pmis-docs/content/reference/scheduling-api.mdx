@@ -1,0 +1,30 @@
+# Scheduling Service API
+
+The Scheduling Service provides core scheduling functionality for the PMIS system.
+
+## Interactive API Reference
+
+<Callout type="important">
+The interactive reference requires the scheduling service running locally.
+</Callout>
+
+<ScalarApiReference url={`${process.env.NEXT_PUBLIC_PMIS_SCHEDULING_URL}/scalar`} title="Scheduling Service" height="800px" />
+
+## Endpoints
+
+### Health Check
+- **GET** `/health` - Service health status
+
+### Authentication
+All endpoints require valid authentication tokens.
+
+## Development
+
+To run the scheduling service locally:
+
+```bash
+cd pmis-backend/scheduling
+dotnet run
+```
+
+The service will be available at http://localhost:5001

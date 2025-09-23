@@ -25,6 +25,9 @@ pmis-frontend/**/coverage/
 *.suo
 TestResults/
 
+# Next.js
+.next/
+
 # Environment files
 .env
 .env.*

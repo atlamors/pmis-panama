@@ -1,0 +1,139 @@
+<!-- sidebar.component.html Container -->
+<div class="sb-wrap h-full p-[var(--sb-pad)] pt-0 space-y-5">
+
+    <!-- Top: brand + collapse -->
+    <div class="flex items-center gap-3 px-1 h-[var(--header-height)]">
+        <button (click)="toggle()" aria-label="Toggle sidebar"
+            class="flex items-center justify-center w-9 h-9 rounded-full border border-border text-text bg-transparent hover:bg-surface-2">
+            @if (isOpen) {
+            <svg width="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M9.35719 3H14.6428C15.7266 2.99999 16.6007 2.99998 17.3086 3.05782C18.0375 3.11737 18.6777 3.24318 19.27 3.54497C20.2108 4.02433 20.9757 4.78924 21.455 5.73005C21.7568 6.32234 21.8826 6.96253 21.9422 7.69138C22 8.39925 22 9.27339 22 10.3572V13.6428C22 14.7266 22 15.6008 21.9422 16.3086C21.8826 17.0375 21.7568 17.6777 21.455 18.27C20.9757 19.2108 20.2108 19.9757 19.27 20.455C18.6777 20.7568 18.0375 20.8826 17.3086 20.9422C16.6008 21 15.7266 21 14.6428 21H9.35717C8.27339 21 7.39925 21 6.69138 20.9422C5.96253 20.8826 5.32234 20.7568 4.73005 20.455C3.78924 19.9757 3.02433 19.2108 2.54497 18.27C2.24318 17.6777 2.11737 17.0375 2.05782 16.3086C1.99998 15.6007 1.99999 14.7266 2 13.6428V10.3572C1.99999 9.27341 1.99998 8.39926 2.05782 7.69138C2.11737 6.96253 2.24318 6.32234 2.54497 5.73005C3.02433 4.78924 3.78924 4.02433 4.73005 3.54497C5.32234 3.24318 5.96253 3.11737 6.69138 3.05782C7.39926 2.99998 8.27341 2.99999 9.35719 3ZM6.85424 5.05118C6.24907 5.10062 5.90138 5.19279 5.63803 5.32698C5.07354 5.6146 4.6146 6.07354 4.32698 6.63803C4.19279 6.90138 4.10062 7.24907 4.05118 7.85424C4.00078 8.47108 4 9.26339 4 10.4V13.6C4 14.7366 4.00078 15.5289 4.05118 16.1458C4.10062 16.7509 4.19279 17.0986 4.32698 17.362C4.6146 17.9265 5.07354 18.3854 5.63803 18.673C5.90138 18.8072 6.24907 18.8994 6.85424 18.9488C7.47108 18.9992 8.26339 19 9.4 19H14.6C15.7366 19 16.5289 18.9992 17.1458 18.9488C17.7509 18.8994 18.0986 18.8072 18.362 18.673C18.9265 18.3854 19.3854 17.9265 19.673 17.362C19.8072 17.0986 19.8994 16.7509 19.9488 16.1458C19.9992 15.5289 20 14.7366 20 13.6V10.4C20 9.26339 19.9992 8.47108 19.9488 7.85424C19.8994 7.24907 19.8072 6.90138 19.673 6.63803C19.3854 6.07354 18.9265 5.6146 18.362 5.32698C18.0986 5.19279 17.7509 5.10062 17.1458 5.05118C16.5289 5.00078 15.7366 5 14.6 5H9.4C8.26339 5 7.47108 5.00078 6.85424 5.05118ZM7 7C7.55229 7 8 7.44772 8 8V16C8 16.5523 7.55229 17 7 17C6.44772 17 6 16.5523 6 16V8C6 7.44772 6.44772 7 7 7Z"
+                    fill="currentColor"></path>
+            </svg>
+            }
+            @if (!isOpen) {
+            <svg width="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M9.35719 3H14.6428C15.7266 2.99999 16.6007 2.99998 17.3086 3.05782C18.0375 3.11737 18.6777 3.24318 19.27 3.54497C20.2108 4.02433 20.9757 4.78924 21.455 5.73005C21.7568 6.32234 21.8826 6.96253 21.9422 7.69138C22 8.39925 22 9.27339 22 10.3572V13.6428C22 14.7266 22 15.6008 21.9422 16.3086C21.8826 17.0375 21.7568 17.6777 21.455 18.27C20.9757 19.2108 20.2108 19.9757 19.27 20.455C18.6777 20.7568 18.0375 20.8826 17.3086 20.9422C16.6008 21 15.7266 21 14.6428 21H9.35717C8.27339 21 7.39925 21 6.69138 20.9422C5.96253 20.8826 5.32234 20.7568 4.73005 20.455C3.78924 19.9757 3.02433 19.2108 2.54497 18.27C2.24318 17.6777 2.11737 17.0375 2.05782 16.3086C1.99998 15.6007 1.99999 14.7266 2 13.6428V10.3572C1.99999 9.27341 1.99998 8.39926 2.05782 7.69138C2.11737 6.96253 2.24318 6.32234 2.54497 5.73005C3.02433 4.78924 3.78924 4.02433 4.73005 3.54497C5.32234 3.24318 5.96253 3.11737 6.69138 3.05782C7.39926 2.99998 8.27341 2.99999 9.35719 3ZM6.85424 5.05118C6.24907 5.10062 5.90138 5.19279 5.63803 5.32698C5.07354 5.6146 4.6146 6.07354 4.32698 6.63803C4.19279 6.90138 4.10062 7.24907 4.05118 7.85424C4.00078 8.47108 4 9.26339 4 10.4V13.6C4 14.7366 4.00078 15.5289 4.05118 16.1458C4.10062 16.7509 4.19279 17.0986 4.32698 17.362C4.6146 17.9265 5.07354 18.3854 5.63803 18.673C5.90138 18.8072 6.24907 18.8994 6.85424 18.9488C7.17922 18.9754 7.55292 18.9882 8 18.9943V5.0057C7.55292 5.01184 7.17922 5.02462 6.85424 5.05118ZM10 5V19H14.6C15.7366 19 16.5289 18.9992 17.1458 18.9488C17.7509 18.8994 18.0986 18.8072 18.362 18.673C18.9265 18.3854 19.3854 17.9265 19.673 17.362C19.8072 17.0986 19.8994 16.7509 19.9488 16.1458C19.9992 15.5289 20 14.7366 20 13.6V10.4C20 9.26339 19.9992 8.47108 19.9488 7.85424C19.8994 7.24907 19.8072 6.90138 19.673 6.63803C19.3854 6.07354 18.9265 5.6146 18.362 5.32698C18.0986 5.19279 17.7509 5.10062 17.1458 5.05118C16.5289 5.00078 15.7366 5 14.6 5H10Z"
+                    fill="currentColor"></path>
+            </svg>
+            }
+        </button>
+        @if (isOpen) {
+        <span class="fade-in flex flex-row items-center gap-2">
+            <span class="inline-block fill-white">
+                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 348 368">
+                    <polygon
+                        points="347 167 227.4 240 243 367 150.5 290 33 365.9 90 252 24.5 252 1 231 126 231 90 300 156.5 258.3 211 304 201.1 231.1 271 188 196 188 193 167 347 167" />
+                    <path
+                        d="M347,124l-34.6,21.9h-120.8c0,0-9.6-69.4-9.6-69.4l-2-1.5-35,71h-78l55.6,42-10.6,21.5H22.8S1,188,1,188h86L1,124h129.5L196,1l16,123.6c.7.6,1.3-.6,1.5-.6h133.5Z" />
+                </svg>
+            </span>
+            <h1 class="text-lg font-semibold">
+                Canal PMIS
+            </h1>
+        </span>
+        }
+    </div>
+
+    <!-- Group: Home -->
+    <div>
+
+        <div class="text-[11px] tracking-wider text-muted ml-2 min-h-5">
+            @if (isOpen) { <span class="fade-in">HOME</span> }
+        </div>
+
+        @for (item of homeItems; track item.id) {
+        <a [routerLink]="item.route"
+            routerLinkActive="bg-[hsl(var(--accent)/.12)] border border-[hsl(var(--accent)/.25)]"
+            class="sb-item gap-3 px-3 py-2 mb-1 rounded-lg text-text border border-transparent hover:bg-surface-2 transition-colors">
+            <ng-icon height="16" width="16" [name]="item.icon" class="sb-glyph w-4 h-4"></ng-icon>
+            @if (isOpen) {
+            <span class="fade-in truncate leading-[var(--sb-icon-size)]">{{ item.label }}</span>
+            @if (item.badge) {
+            <span
+                class="fade-in ml-auto text-[10px] h-[var(--sb-icon-size)] w-[var(--sb-icon-size)] flex items-center justify-center rounded-full bg-[hsl(var(--accent)/.18)] text-text border border-[hsl(var(--accent)/.25)]">
+                {{ item.badge }}
+            </span>
+            }
+            @if (item.dot) {
+            <span class="ml-auto w-2 h-2 rounded-full bg-green-400"></span>
+            }
+            }
+        </a>
+        }
+    </div>
+
+    <!-- Group: Canal Ops -->
+    <div class="pt-3 border-t border-border">
+
+        <div class="text-[11px] tracking-wider text-muted ml-2 min-h-5">
+            @if (isOpen) { <span class="fade-in">OPERATIONS</span> }
+        </div>
+
+        @for (op of canalOps; track op.id) {
+        <a [routerLink]="op.route" routerLinkActive="bg-[hsl(var(--accent)/.12)] border border-[hsl(var(--accent)/.25)]"
+            class="sb-item gap-3 px-3 py-2 mb-1 rounded-lg text-text border border-transparent hover:bg-surface-2 transition-colors">
+            <ng-icon [name]="op.icon" class="sb-glyph w-6 h-6"></ng-icon>
+            @if (isOpen) {
+            <span class="truncate fade-in leading-[var(--sb-icon-size)]">{{ op.label }}</span>
+            }
+        </a>
+        }
+    </div>
+
+    <div class="sb-spacer"></div>
+
+    <!-- Bottom: Account Section-->
+    <div class="relative px-1 h-[var(--header-height)]">
+        <!-- Account button -->
+        <button type="button" (click)="toggleAccountMenu($event)" [attr.aria-expanded]="isMenuOpen" aria-haspopup="menu"
+            aria-controls="account-menu" class="sb-account group w-full gap-3 px-3 min-h-[var(--header-height)] py-2 rounded-lg text-text border border-border
+            border-fade-out transition-colors duration-150 ease-out focus:outline-none
+             flex flex-row items-center gap-3">
+            <div
+                class="sb-avatar flex items-center justify-center border border-border rounded-full h-10 w-10 group-hover:bg-surface-2">
+                <ng-icon name="heroUser" class="w-5 h-5"></ng-icon>
+            </div>
+            @if (isOpen) {
+            <div class="truncate text-left">
+                <div class="text-[13px] leading-tight">Mía Arosemena</div>
+                <div class="text-[11px] text-muted leading-tight">Operator</div>
+            </div>
+            <ng-icon name="heroChevronUpDown" class="w-5 h-5 justify-self-end"></ng-icon>
+            }
+
+        </button>
+
+        <!-- Popup menu -->
+        @if (isMenuOpen) {
+        <div id="account-menu" role="menu" class="menu-panel absolute left-1 right-1 bottom-[calc(var(--header-height)-.25rem)]
+               rounded-[var(--r-default)] border border-border bg-bg text-text overflow-hidden"
+            (keydown.escape)="closeAccountMenu()">
+            <button role="menuitem" (click)="go('/profile')" class="grid grid-cols-[20px,1fr] items-center gap-2 w-full text-left
+                px-3 py-2 hover:bg-surface-2 focus:outline-none
+                focus:ring-2 focus:ring-[hsl(var(--accent)/.25)]">
+                <i class="pi pi-user text-[16px]"></i>
+                <span class="text-[13px]">Profile</span>
+            </button>
+
+            <button role="menuitem" (click)="go('/settings')" class="grid grid-cols-[20px,1fr] items-center gap-2 w-full text-left
+                 px-3 py-2 hover:bg-surface-2 focus:outline-none
+                 focus:ring-2 focus:ring-[hsl(var(--accent)/.25)]">
+                <i class="pi pi-cog text-[16px]"></i>
+                <span class="text-[13px]">Settings</span>
+            </button>
+
+            <div class="h-px my-1 bg-[hsl(var(--border))]/80"></div>
+
+            <button role="menuitem" (click)="signOut()" class="grid grid-cols-[20px,1fr] items-center gap-2 w-full text-left
+                 px-3 py-2 hover:bg-surface-2 focus:outline-none
+                 focus:ring-2 focus:ring-[hsl(var(--accent)/.25)]">
+                <i class="pi pi-sign-out text-[16px]"></i>
+                <span class="text-[13px]">Sign out</span>
+            </button>
+        </div>
+        }
+    </div>
+</div>

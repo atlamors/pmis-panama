@@ -1,0 +1,32 @@
+# API Reference
+
+This section contains the API documentation for all PMIS services.
+
+## Available APIs
+
+- [Scheduling Service](./scheduling) - Core scheduling functionality
+- [API Gateway](./gateway) - Gateway routing and health checks
+
+## Authentication
+
+All APIs use OIDC-based authentication. Include the bearer token in the Authorization header:
+
+```
+Authorization: Bearer <your-token>
+```
+
+## Error Handling
+
+APIs return structured error responses using Problem Details format:
+
+```json
+{
+  "type": "https://example.com/problems/validation-error",
+  "title": "Validation Error",
+  "status": 400,
+  "detail": "The request contains invalid data",
+  "instance": "/api/scheduling/appointments"
+}
+```
+
+

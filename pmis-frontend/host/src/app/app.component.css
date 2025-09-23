@@ -1,0 +1,25 @@
+.app-shell {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    min-height: 100vh;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+}
+
+.header {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.body {
+    flex: 1 1 auto;
+}

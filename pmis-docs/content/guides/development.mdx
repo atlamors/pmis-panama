@@ -1,0 +1,87 @@
+# Development Guide
+
+This guide covers development workflows and best practices for the PMIS system.
+
+## Development Workflow
+
+### Starting Development
+
+1. **Kill any running processes**:
+```bash
+pnpm dev:kill
+```
+
+2. **Start all services**:
+```bash
+pnpm dev
+```
+
+3. **Or start services individually**:
+<Tabs items={["Frontend", "Backend", "Docs"]}>
+  <Tab>
+  ```bash
+  pnpm dev:fe
+  ```
+  </Tab>
+  <Tab>
+  ```bash
+  pnpm dev:be
+  ```
+  </Tab>
+  <Tab>
+  ```bash
+  pnpm docs
+  ```
+  </Tab>
+</Tabs>
+
+### Service Ports
+
+- Host: 4200
+- Scheduling MFE: 4201
+- API Gateway: 5000
+- Scheduling Service: 5001
+- Documentation: 3000
+
+## Code Standards
+
+### Frontend (Angular)
+- Use standalone components
+- Reactive Forms by default
+- Tailwind for styling
+- PrimeNG for components
+
+### Backend (.NET)
+- Minimal APIs
+- Record types for DTOs
+- FluentValidation for validation
+- Serilog for logging
+
+<Callout type="caution">
+Do not introduce new frameworks or cross-cutting deps without approval.
+</Callout>
+
+## Testing
+
+```bash
+# Run all tests
+pnpm test
+
+# Frontend tests
+pnpm test:fe
+
+# Backend tests
+pnpm test:be
+```
+
+## Building
+
+```bash
+# Build all
+pnpm build
+
+# Build for production
+pnpm build:prod:fe
+```
+
+

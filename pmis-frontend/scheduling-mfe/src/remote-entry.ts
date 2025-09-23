@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
 import { Routes } from '@angular/router';
-
-@Component({
-	standalone: true,
-	selector: 'scheduling-remote-entry',
-	template: `<div class="p-4 rounded border border-gray-800 bg-gray-900 text-gray-200">Scheduling Remote Ready</div>`
-})
-export class SchedulingRemoteEntryComponent {}
+import { AppComponent } from './app/app.component';
+import { GanttPageComponent } from './app/pages/views/gantt/gantt.page';
 
 export const RemoteRoutes: Routes = [
-    { path: '', component: SchedulingRemoteEntryComponent }
-  ];
+    {
+        path: '',
+        component: AppComponent, // your shell with <router-outlet>
+        children: [
+            { path: '', pathMatch: 'full', redirectTo: 'pages/views/gantt' },
+            { path: 'pages/views/gantt', component: GanttPageComponent },
+        ],
+    },
+];

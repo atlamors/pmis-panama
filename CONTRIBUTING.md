@@ -7,8 +7,7 @@ This repository follows enterprise-grade practices to ensure quality, security, 
 
 ## 📋 Code of Conduct
 
-All contributors must follow our [Code of Conduct](CODE_OF_CONDUCT.md).
-Treat each other with respect. Harassment or inappropriate behavior will not be tolerated.
+Treat each other with respect.
 
 ---
 

@@ -1,0 +1,70 @@
+# Quick Start
+
+Follow these steps to get the PMIS MVP running locally.
+
+---
+
+## Prerequisites
+
+* [Node.js 20+](https://nodejs.org)
+* [pnpm 9+](https://pnpm.io)
+* [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
+
+---
+
+## Setup
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/your-org/pmis-panama.git
+   cd pmis-panama
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   pnpm install
+   ```
+
+3. **Start the frontend (host + MFEs)**
+
+   ```bash
+   pnpm run dev:fe
+   ```
+
+   * Host: [http://localhost:4200](http://localhost:4200)
+   * Scheduling MFE: lazy-loaded at `/scheduling`
+
+4. **Start the backend (gateway + services)**
+
+   ```bash
+   pnpm run dev:be
+   ```
+
+   * API Gateway: [http://localhost:5000](http://localhost:5000)
+
+---
+
+## Notes
+
+* The **federation manifest** (`/assets/mf.manifest.json`) is the **only source of truth** for remote URLs.
+* Ports are **normalized across environments**:
+
+  * Host → `:4200` (dev/preview/prod)
+  * Scheduling MFE → `:4201` (dev/preview/prod)
+
+### Production Preview
+
+Build and serve static bundles:
+
+```bash
+pnpm run preview:fe
+pnpm run preview:be
+```
+
+* Host: [http://localhost:4200](http://localhost:4200)
+* Scheduling MFE: [http://localhost:4201](http://localhost:4201)
+* SPA fallback ensures deep links (`/settings`, `/scheduling`) work.
+* CORS is enabled on remotes during preview (`serve -s ... -C`).
+ 
