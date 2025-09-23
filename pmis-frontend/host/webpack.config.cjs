@@ -15,8 +15,5 @@ module.exports = withModuleFederationPlugin({
         '@angular/router': { singleton: true, strictVersion: true, requiredVersion: '20.3.0' },
         'rxjs': { singleton: true, strictVersion: true, requiredVersion: '7.8.2' },
         // do NOT share zone.js
-    },
-    devServer: {
-        historyApiFallback: true,
-    },
+    }
 });

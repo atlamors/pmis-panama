@@ -18,12 +18,14 @@
                         "tsConfig": "tsconfig.app.json",
                         "inlineStyleLanguage": "css",
                         "assets": [
-                            "src/favicon.ico",
-                            "src/assets"
+                            {
+                                "input": "src/assets",
+                                "glob": "**/*",
+                                "ignore": [],
+                                "output": "assets"
+                            }
                         ],
-                        "styles": [
-                            "src/styles.css"
-                        ],
+                        "styles": ["src/style.css"],
                         "scripts": [],
                         "customWebpackConfig": {
                             "path": "webpack.config.cjs"

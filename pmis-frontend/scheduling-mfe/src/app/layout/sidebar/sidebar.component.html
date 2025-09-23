@@ -1,7 +1,16 @@
-<nav class="flex flex-col gap-2 p-4">
+<nav class="flex flex-row gap-2 p-4 border-r border-zinc-800">
+    <a routerLink="pages/dashboard" routerLinkActive="bg-zinc-800 text-white"
+        class="rounded px-3 py-2 text-sm text-zinc-200 hover:bg-zinc-800/50">
+        Dashboard
+    </a>
+    <div class="text-sm text-zinc-200">Views</div>
     <a routerLink="pages/views/gannt" routerLinkActive="bg-zinc-800 text-white"
         class="rounded px-3 py-2 text-sm text-zinc-200 hover:bg-zinc-800/50">
         Gannt View
+    </a>
+    <a routerLink="pages/views/kanban" routerLinkActive="bg-zinc-800 text-white"
+        class="rounded px-3 py-2 text-sm text-zinc-200 hover:bg-zinc-800/50">
+        Kanban View
     </a>
     <!-- Add more links as routes grow -->
 </nav>

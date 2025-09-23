@@ -3,7 +3,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 
 
 @Component({
-    selector: 'app-sidebar',
+    selector: 'scheduling-sidebar',
     standalone: true,
     imports: [RouterLink, RouterLinkActive],
     templateUrl: './sidebar.component.html',
