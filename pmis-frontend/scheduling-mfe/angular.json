@@ -50,7 +50,7 @@
                         "buildTarget": "scheduling-mfe:build",
                         "port": 4201,
                         "hmr": false,
-                        "liveReload": false,
+                        "liveReload": true,
                         "watch": true
                     },
                     "configurations": {

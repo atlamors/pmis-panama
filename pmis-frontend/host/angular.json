@@ -51,7 +51,7 @@
                         "port": 4200,
                         "proxyConfig": "proxy.conf.json",
                         "hmr": false,
-                        "liveReload": true,
+                        "liveReload": false,
                         "watch": true
                     },
                     "configurations": {

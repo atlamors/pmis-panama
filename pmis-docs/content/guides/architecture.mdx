@@ -12,10 +12,21 @@ flowchart LR
  subgraph FE["Frontend"]
         host["Angular Host App"]
         mfe1["Scheduling MFE"]
+        mfe2["Accounting MFE"]
+        mfe3["Operations MFE"]
+        mfe4["Customs MFE"]
+        mfe5["Resources MFE"]
+        mfe6["Etc..."]
   end
  subgraph SVC[".NET Core Services"]
-        sched["Scheduling Service"]
-        auth["Auth Service"]
+        service6["Etc..."] 
+        service1["Scheduling Service"]
+        service2["Accounting Service"]
+        service3["Operations Service"]
+        service4["Customs Service"]
+        service5["Resources Service"]
+        service7["Scheduling Service"]
+        service8["Auth Service"]
   end
  subgraph BE["Backend"]
         gw["API Gateway"]
@@ -24,12 +35,27 @@ flowchart LR
     user["Operator / User"] -- HTTPS --> browser["Browser"]
     browser --> host
     host -- Module Federation --> mfe1
+    host -- Module Federation --> mfe2
+    host -- Module Federation --> mfe3
+    host -- Module Federation --> mfe4
+    host -- Module Federation --> mfe5
+    host -- Module Federation --> mfe6
     host -- REST/JSON --> gw
+    mfe6 -- REST/JSON --> gw
+    mfe2 -- REST/JSON --> gw
+    mfe3 -- REST/JSON --> gw
+    mfe4 -- REST/JSON --> gw
+    mfe5 -- REST/JSON --> gw
     mfe1 -- REST/JSON --> gw
-    gw --> sched & auth
-    sched --> db[("Azure SQL")]
-    auth --> db
-    sched -- Events / telemetry --> obs[("Observability")]
+    gw --> service7 & service8 & service1 & service2 & service3 & service4 & service5 & service6
+    service7 --> db[("Azure SQL")]
+    service8 --> db
+    service1 --> db
+    service2 --> db
+    service3 --> db
+    service4 --> db
+    service5 --> db
+    service6 --> db
 ```
 
 ---
@@ -40,6 +66,11 @@ flowchart LR
 | -------------- | ------------------------------ | ---- | ----------------------------- |
 | Host           | `pmis-frontend/host`           | 4200 | Angular 20, Module Federation |
 | Scheduling MFE | `pmis-frontend/scheduling-mfe` | 4201 | Angular 20, Module Federation |
+| Accounting MFE | `pmis-frontend/accounting-mfe` | 4202 | Angular 20, Module Federation |
+| Operations MFE | `pmis-frontend/operations-mfe` | 4203 | Angular 20, Module Federation |
+| Customs MFE | `pmis-frontend/customs-mfe` | 4204 | Angular 20, Module Federation |
+| Resources MFE | `pmis-frontend/resources-mfe` | 4205 | Angular 20, Module Federation |
+| ...            | ...                            | ...  | ...                           |
 
 - Ports `4200` reserved for the host.
 
@@ -54,7 +85,7 @@ flowchart LR
 | Scheduling  | `pmis-backend/scheduling`  | 5100 | ASP.NET Core 8, EF Core, Scalar |
 
 - Ports `5000-5099` reserved for core and cross cutting services.
-- Ports `5100-5999` reserved for future services.
+- Ports `5100-5999` reserved for services.
 
 ---
 

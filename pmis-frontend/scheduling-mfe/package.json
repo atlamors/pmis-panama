@@ -5,16 +5,25 @@
     "type": "module",
     "scripts": {
         "start": "ng analytics off && ng serve --host 0.0.0.0 --port 4201",
-        "dev": "ng analytics off && ng serve --host 0.0.0.0 --port 4201",
+        "serve": "ng analytics off && ng serve --host 0.0.0.0 --port 4201",
+    
+        "tw:watch": "tailwindcss -c tailwind.config.cjs -i src/style.css -o src/assets/style.css -w",
+        "tw:build": "tailwindcss -c tailwind.config.cjs -i src/style.css -o src/assets/style.css --minify",
+    
+        "dev": "turbo run serve tw:watch --parallel --filter=@pmis-frontend/scheduling-mfe",
+    
         "build": "ng build",
         "build:prod": "ng build -c production",
+        "postbuild": "node scripts/write-assets-manifest.mjs",
+    
         "serve:prod": "serve -s dist/scheduling-mfe -l 4201 -C",
-        "preview:prod": "pnpm run build:prod && pnpm run serve:prod",
+        "preview:prod": "pnpm run build:prod && pnpm run postbuild && pnpm run serve:prod",
+    
         "test": "ng test",
         "lint": "ng lint || true",
         "typecheck": "tsc -p tsconfig.app.json --noEmit",
         "clean": "rimraf dist node_modules"
-    },
+      },
     "dependencies": {
         "@angular/animations": "^20.3.0",
         "@angular/common": "^20.3.0",

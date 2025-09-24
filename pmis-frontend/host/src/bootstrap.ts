@@ -3,6 +3,8 @@ import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { Component } from '@angular/core';
 import { RouterOutlet, Routes } from '@angular/router';
 import { provideIcons } from '@ng-icons/core';
+import { loadRemoteRoutes } from './utils/load-remote-routes';
+
 
 // Main app component
 import { AppComponent } from './app/app.component';
@@ -21,12 +23,24 @@ import {
 
 // Routes
 const routes: Routes = [
-// Default route
-    { path: '', pathMatch: 'full', redirectTo: 'scheduling' },
-// Local routes
-    // { path: 'settings', loadComponent: () => import('./pages/*').then(m => m.SettingsPageComponent) },
-// Remote routes
-    { path: 'scheduling', loadChildren: () => import('scheduling/Module').then(m => m.RemoteRoutes) },
+    // Default route
+    { path: '' },
+    // Local routes
+
+    // Remote routes
+    {
+        path: 'scheduling',
+        loadChildren: () =>
+            loadRemoteRoutes({
+                remoteEntryUrl: 'http://localhost:4201/remoteEntry.js',
+                exposedModule: './Module',
+                cssManifestPath: 'assets/assets.json',
+                cssDevFallback: 'assets/style.css',
+                timeoutMs: 8000,
+            }),
+    },
+    // Wildcard route
+    { path: '**', redirectTo: '' },
 ];
 
 // Bootstrap the application
@@ -34,9 +48,9 @@ bootstrapApplication(AppComponent, {
     providers: [
         provideRouter(
             routes,
-            withInMemoryScrolling({ 
-                anchorScrolling: 'enabled', 
-                scrollPositionRestoration: 'enabled' 
+            withInMemoryScrolling({
+                anchorScrolling: 'enabled',
+                scrollPositionRestoration: 'enabled'
             }),
         ),
         provideIcons({

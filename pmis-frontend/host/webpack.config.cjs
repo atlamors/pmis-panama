@@ -4,7 +4,8 @@ const { withModuleFederationPlugin } = require('@angular-architects/module-feder
  * 1) MF plugin options
  * 2) Top-level webpack config
  */
-module.exports = withModuleFederationPlugin({
+module.exports = withModuleFederationPlugin(
+{
     name: 'host',
     remotes: {
         scheduling: 'http://localhost:4201/remoteEntry.js',
@@ -16,4 +17,15 @@ module.exports = withModuleFederationPlugin({
         'rxjs': { singleton: true, strictVersion: true, requiredVersion: '7.8.2' },
         // do NOT share zone.js
     }
-});
+},
+    {
+        devServer: {
+            headers: {
+                'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+                Pragma: 'no-cache',
+                Expires: '0',
+                'Surrogate-Control': 'no-store',
+            },
+        }
+    }
+);

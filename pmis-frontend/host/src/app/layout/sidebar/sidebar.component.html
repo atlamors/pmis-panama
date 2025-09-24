@@ -1,10 +1,10 @@
 <!-- sidebar.component.html Container -->
-<div class="sb-wrap h-full p-[var(--sb-pad)] pt-0 space-y-5">
+<div class="host-sb-wrap host-h-full host-p-[var(--sb-pad)] host-pt-0 host-space-y-5">
 
     <!-- Top: brand + collapse -->
-    <div class="flex items-center gap-3 px-1 h-[var(--header-height)]">
+    <div class="host-flex host-items-center host-gap-3 host-px-1 host-h-[var(--header-height)]">
         <button (click)="toggle()" aria-label="Toggle sidebar"
-            class="flex items-center justify-center w-9 h-9 rounded-full border border-border text-text bg-transparent hover:bg-surface-2">
+            class="host-flex host-items-center host-justify-center host-w-9 host-h-9 host-rounded-full host-border host-border-border host-text-text host-bg-transparent host-hover:bg-surface-2">
             @if (isOpen) {
             <svg width="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -21,8 +21,8 @@
             }
         </button>
         @if (isOpen) {
-        <span class="fade-in flex flex-row items-center gap-2">
-            <span class="inline-block fill-white">
+        <span class="fade-in host-flex host-flex-row host-items-center host-gap-2">
+            <span class="host-inline-block host-fill-white">
                 <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 348 368">
                     <polygon
                         points="347 167 227.4 240 243 367 150.5 290 33 365.9 90 252 24.5 252 1 231 126 231 90 300 156.5 258.3 211 304 201.1 231.1 271 188 196 188 193 167 347 167" />
@@ -30,7 +30,7 @@
                         d="M347,124l-34.6,21.9h-120.8c0,0-9.6-69.4-9.6-69.4l-2-1.5-35,71h-78l55.6,42-10.6,21.5H22.8S1,188,1,188h86L1,124h129.5L196,1l16,123.6c.7.6,1.3-.6,1.5-.6h133.5Z" />
                 </svg>
             </span>
-            <h1 class="text-lg font-semibold">
+            <h1 class="host-text-lg host-font-semibold">
                 Canal PMIS
             </h1>
         </span>
@@ -40,25 +40,25 @@
     <!-- Group: Home -->
     <div>
 
-        <div class="text-[11px] tracking-wider text-muted ml-2 min-h-5">
+        <div class="host-text-[11px] host-tracking-wider host-text-muted host-ml-2 host-min-h-5">
             @if (isOpen) { <span class="fade-in">HOME</span> }
         </div>
 
         @for (item of homeItems; track item.id) {
         <a [routerLink]="item.route"
-            routerLinkActive="bg-[hsl(var(--accent)/.12)] border border-[hsl(var(--accent)/.25)]"
-            class="sb-item gap-3 px-3 py-2 mb-1 rounded-lg text-text border border-transparent hover:bg-surface-2 transition-colors">
+            routerLinkActive="host-bg-[hsl(var(--accent)/.12)] host-border host-border-[hsl(var(--accent)/.25)]"
+            class="sb-item host-gap-3 host-px-3 host-py-2 host-mb-1 host-rounded-lg host-text-text host-border host-border-transparent host-hover:bg-surface-2 host-transition-colors">
             <ng-icon height="16" width="16" [name]="item.icon" class="sb-glyph w-4 h-4"></ng-icon>
             @if (isOpen) {
-            <span class="fade-in truncate leading-[var(--sb-icon-size)]">{{ item.label }}</span>
+            <span class="fade-in host-truncate host-leading-[var(--sb-icon-size)]">{{ item.label }}</span>
             @if (item.badge) {
             <span
-                class="fade-in ml-auto text-[10px] h-[var(--sb-icon-size)] w-[var(--sb-icon-size)] flex items-center justify-center rounded-full bg-[hsl(var(--accent)/.18)] text-text border border-[hsl(var(--accent)/.25)]">
+                class="fade-in host-ml-auto host-text-[10px] host-h-[var(--sb-icon-size)] host-w-[var(--sb-icon-size)] host-flex host-items-center host-justify-center host-rounded-full host-bg-[hsl(var(--accent)/.18)] host-text-text host-border host-border-[hsl(var(--accent)/.25)]">
                 {{ item.badge }}
             </span>
             }
             @if (item.dot) {
-            <span class="ml-auto w-2 h-2 rounded-full bg-green-400"></span>
+            <span class="host-ml-auto host-w-2 host-h-2 host-rounded-full host-bg-green-400"></span>
             }
             }
         </a>
@@ -66,18 +66,18 @@
     </div>
 
     <!-- Group: Canal Ops -->
-    <div class="pt-3 border-t border-border">
+    <div class="host-pt-3 host-border-t host-border-border">
 
-        <div class="text-[11px] tracking-wider text-muted ml-2 min-h-5">
+        <div class="host-text-[11px] host-tracking-wider host-text-muted host-ml-2 host-min-h-5">
             @if (isOpen) { <span class="fade-in">OPERATIONS</span> }
         </div>
 
         @for (op of canalOps; track op.id) {
-        <a [routerLink]="op.route" routerLinkActive="bg-[hsl(var(--accent)/.12)] border border-[hsl(var(--accent)/.25)]"
-            class="sb-item gap-3 px-3 py-2 mb-1 rounded-lg text-text border border-transparent hover:bg-surface-2 transition-colors">
-            <ng-icon [name]="op.icon" class="sb-glyph w-6 h-6"></ng-icon>
+        <a [routerLink]="op.route" routerLinkActive="host-bg-[hsl(var(--accent)/.12)] host-border host-border-[hsl(var(--accent)/.25)]"
+            class="sb-item host-gap-3 host-px-3 host-py-2 host-mb-1 host-rounded-lg host-text-text host-border host-border-transparent host-hover:bg-surface-2 host-transition-colors">
+            <ng-icon [name]="op.icon" class="sb-glyph host-w-6 host-h-6"></ng-icon>
             @if (isOpen) {
-            <span class="truncate fade-in leading-[var(--sb-icon-size)]">{{ op.label }}</span>
+            <span class="host-truncate host-fade-in host-leading-[var(--sb-icon-size)]">{{ op.label }}</span>
             }
         </a>
         }
@@ -86,52 +86,52 @@
     <div class="sb-spacer"></div>
 
     <!-- Bottom: Account Section-->
-    <div class="relative px-1 h-[var(--header-height)]">
+    <div class="host-relative host-px-1 host-h-[var(--header-height)]">
         <!-- Account button -->
         <button type="button" (click)="toggleAccountMenu($event)" [attr.aria-expanded]="isMenuOpen" aria-haspopup="menu"
-            aria-controls="account-menu" class="sb-account group w-full gap-3 px-3 min-h-[var(--header-height)] py-2 rounded-lg text-text border border-border
-            border-fade-out transition-colors duration-150 ease-out focus:outline-none
-             flex flex-row items-center gap-3">
+            aria-controls="account-menu" class="sb-account group host-w-full host-gap-3 host-px-3 host-min-h-[var(--header-height)] host-py-2 host-rounded-lg host-text-text host-border host-border-border
+            border-fade-out host-transition-colors host-duration-150 host-ease-out host-focus:outline-none
+            host-flex host-flex-row host-items-center host-gap-3">
             <div
-                class="sb-avatar flex items-center justify-center border border-border rounded-full h-10 w-10 group-hover:bg-surface-2">
-                <ng-icon name="heroUser" class="w-5 h-5"></ng-icon>
+                class="sb-avatar host-flex host-items-center host-justify-center host-border host-border-border host-rounded-full host-h-10 host-w-10 host-group-hover:bg-surface-2">
+                <ng-icon name="heroUser" class="host-w-5 host-h-5"></ng-icon>
             </div>
             @if (isOpen) {
-            <div class="truncate text-left">
-                <div class="text-[13px] leading-tight">Mía Arosemena</div>
-                <div class="text-[11px] text-muted leading-tight">Operator</div>
+            <div class="host-truncate host-text-left">
+                <div class="host-text-[13px] host-leading-tight">Mía Arosemena</div>
+                <div class="host-text-[11px] host-text-muted host-leading-tight">Operator</div>
             </div>
-            <ng-icon name="heroChevronUpDown" class="w-5 h-5 justify-self-end"></ng-icon>
+            <ng-icon name="heroChevronUpDown" class="host-w-5 host-h-5 host-justify-self-end"></ng-icon>
             }
 
         </button>
 
         <!-- Popup menu -->
         @if (isMenuOpen) {
-        <div id="account-menu" role="menu" class="menu-panel absolute left-1 right-1 bottom-[calc(var(--header-height)-.25rem)]
-               rounded-[var(--r-default)] border border-border bg-bg text-text overflow-hidden"
+        <div id="account-menu" role="menu" class="menu-panel host-absolute host-left-1 host-right-1 host-bottom-[calc(var(--header-height)-.25rem)]
+               host-rounded-[var(--r-default)] host-border host-border-border host-bg-bg host-text-text host-overflow-hidden"
             (keydown.escape)="closeAccountMenu()">
-            <button role="menuitem" (click)="go('/profile')" class="grid grid-cols-[20px,1fr] items-center gap-2 w-full text-left
-                px-3 py-2 hover:bg-surface-2 focus:outline-none
-                focus:ring-2 focus:ring-[hsl(var(--accent)/.25)]">
-                <i class="pi pi-user text-[16px]"></i>
-                <span class="text-[13px]">Profile</span>
+            <button role="menuitem" (click)="go('/profile')" class="host-grid host-grid-cols-[20px,1fr] host-items-center host-gap-2 host-w-full host-text-left
+                host-px-3 host-py-2 host-hover:bg-surface-2 host-focus:outline-none
+                host-focus:ring-2 host-focus:ring-[hsl(var(--accent)/.25)]">
+                <i class="pi pi-user host-text-[16px]"></i>
+                <span class="host-text-[13px]">Profile</span>
             </button>
 
-            <button role="menuitem" (click)="go('/settings')" class="grid grid-cols-[20px,1fr] items-center gap-2 w-full text-left
-                 px-3 py-2 hover:bg-surface-2 focus:outline-none
-                 focus:ring-2 focus:ring-[hsl(var(--accent)/.25)]">
-                <i class="pi pi-cog text-[16px]"></i>
+            <button role="menuitem" (click)="go('/settings')" class="host-grid host-grid-cols-[20px,1fr] host-items-center host-gap-2 host-w-full host-text-left
+                 host-px-3 host-py-2 host-hover:bg-surface-2 host-focus:outline-none
+                 host-focus:ring-2 host-focus:ring-[hsl(var(--accent)/.25)]">
+                <i class="pi pi-cog host-text-[16px]"></i>
                 <span class="text-[13px]">Settings</span>
             </button>
 
-            <div class="h-px my-1 bg-[hsl(var(--border))]/80"></div>
+            <div class="host-h-px host-my-1 host-bg-[hsl(var(--border))]/80"></div>
 
-            <button role="menuitem" (click)="signOut()" class="grid grid-cols-[20px,1fr] items-center gap-2 w-full text-left
-                 px-3 py-2 hover:bg-surface-2 focus:outline-none
-                 focus:ring-2 focus:ring-[hsl(var(--accent)/.25)]">
-                <i class="pi pi-sign-out text-[16px]"></i>
-                <span class="text-[13px]">Sign out</span>
+            <button role="menuitem" (click)="signOut()" class="host-grid host-grid-cols-[20px,1fr] host-items-center host-gap-2 host-w-full host-text-left
+                 host-px-3 host-py-2 host-hover:bg-surface-2 host-focus:outline-none
+                 host-focus:ring-2 host-focus:ring-[hsl(var(--accent)/.25)]">
+                <i class="pi pi-sign-out host-text-[16px]"></i>
+                <span class="host-text-[13px]">Sign out</span>
             </button>
         </div>
         }
