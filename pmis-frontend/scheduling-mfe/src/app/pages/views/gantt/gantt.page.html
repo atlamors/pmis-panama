@@ -1,6 +1,12 @@
-<section class="gantt">
+<div class="gantt">
     <div class="toolbar">
         <button type="button" (click)="copyShareUrl()">Share view</button>
     </div>
-    <div #timeline class="timeline-root"></div>
-</section>
+
+    <div 
+        #timeline 
+        class="timeline-root" 
+        ganttBackgroundColumns [stepHours]="1"
+    >
+    </div>
+</div>
