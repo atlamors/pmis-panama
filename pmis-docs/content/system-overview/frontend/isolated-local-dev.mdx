@@ -1,0 +1,71 @@
+# [Moved] Isolated Local Dev Model
+
+This page has moved to System Overview → Frontend.
+
+New path: `/system-overview/frontend/isolated-local-dev`
+
+## Goal
+
+Enable feature teams to develop their micro‑frontends (MFEs) in isolation, without relying on the host during day‑to‑day work, while still supporting monorepo workflows.
+
+## Approach
+
+- **Remotes**
+  - Run standalone with `ng serve`.
+  - Tailwind writes to `src/assets/style.css`.
+  - Routes and layouts work as if the remote were embedded in the host.
+  - Developers can preview and QA features without needing to spin up the full monorepo.
+- **Host**
+  - Uses prefixed Tailwind and loads remotes dynamically.
+  - Acts as the integration validation layer.
+
+## Repo Model
+
+- **Option 1: Monorepo**
+  - Teams develop directly inside the monorepo.
+  - Turbo handles orchestration (`pnpm run dev --filter=`).
+  - Great for tight‑knit teams.
+- **Option 2: Mirrors**
+  - Teams clone their MFE into a lightweight isolated repo (mirrored from monorepo).
+  - CI/CD pulls changes back into the main repo.
+  - Lower friction for teams less comfortable with monorepo workflows.
+
+Both options are viable, depending on team maturity and CI/CD readiness.
+
+## Benefits
+
+- Teams move independently.
+- Isolation ensures one broken MFE does not block others.
+- Easier scaling of feature teams across the org.
+
+## Operational Considerations
+
+### Runtime CSS Loading
+
+- Host loads each remote’s CSS dynamically:
+  - Manifest‑driven in production (`assets.json` → hashed `style.css`).
+  - Dev fallback to fixed `assets/style.css`.
+- CSS injection is non‑blocking: if CSS fails, the shell still works.
+
+### Caching Strategy
+
+- Hashed filenames guarantee cache busting in prod.
+- Dev fallback uses query‑string busting (`style.css?v=123456`).
+
+### Error Handling
+
+- If remote routes fail to load:
+  - Host logs `[mfe:routes]` remote unavailable.
+  - Router falls back to an empty outlet (`[{ path: '' }]`).
+  - Ensures the host shell stays visible.
+- If CSS fails to load:
+  - Host logs `[mfe:css]` manifest missing → fallback.
+  - Falls back to `style.css` with cache‑busting.
+
+### CI/CD Pipeline Hooks
+
+- Postbuild script (`write-assets-manifest.mjs`) guarantees manifest generation.
+- Dev workflow always writes `src/assets/style.css`.
+- Host runtime util (`loadRemoteRoutes`) abstracts CSS + route loading.
+
+
