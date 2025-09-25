@@ -89,13 +89,13 @@ flowchart LR
   * API Services → `:5100-5999`
   * Documentation → `:3000`
 * **API Gateway:** `/api/*` (served by backend gateway)
-* **Module Federation manifest:** host serves `/assets/router.manifest.json` as the single source of truth for remote URLs.
+* **Module Federation manifest:** host serves `/assets/mf.manifest.json` as the single source of truth for remote URLs.
 
 ---
 
 ## What’s Inside
 
-* **Frontend**: Angular 20, Module Federation, Tailwind CSS (v4)
+* **Frontend**: Angular 20, Module Federation, Tailwind CSS (v3.4 with v4-style import)
 * **Backend**: ASP.NET Core 8, EF Core, YARP gateway
 * **Docs**: Nextra + MDX, with Mermaid diagrams
 

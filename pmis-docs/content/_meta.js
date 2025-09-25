@@ -8,6 +8,9 @@ export default {
     "runbook": {
         "title": "Developer Runbook"
     },
+    "system-overview": {
+        "title": "System Overview"
+    },
     "guides": {
         "title": "Guides"
     },

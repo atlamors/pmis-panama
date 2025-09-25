@@ -1,0 +1,255 @@
+---
+title: Federated Module Architecture
+---
+
+import { FileTree } from 'nextra/components'
+
+# Federated Module Architecture
+
+## Executive Summary
+
+The proposed architecture for the **Scheduling Micro-Frontend (MFE)** is highly robust, modern, and aligned with 
+Angular and Module Federation best practices. It balances modularity, maintainability, and performance while remaining 
+developer-friendly. The design decisions made here establish a **canonical pattern** that should be followed across 
+all future MFEs in the PMIS suite (Accounting, Operations, Customs). 
+
+This document serves as a **reference blueprint** for new and existing contributors.
+
+---
+
+## Strengths & Best Practices
+
+### Separation of Concerns
+
+* **Thin Components + Facades**
+
+  * Example: `gantt.page.ts` contains only input/output bindings and delegates all logic to the `GanttFacade`.
+  * This ensures UI elements remain simple, while facades encapsulate domain logic.
+
+```tsx filename="pages/views/gantt/gantt.page.ts"
+@Component({ selector: 'app-gantt-page', standalone: true, templateUrl: './gantt.page.html' })
+export class GanttPage {
+  constructor(readonly facade: GanttFacade) {}
+  onNow() { this.facade.centerNow(); }
+  onZoomIn() { this.facade.zoomIn(); }
+  onZoomOut() { this.facade.zoomOut(); }
+}
+```
+
+* **Adapter Isolation**
+
+  * Example: `timeline.adapter.ts` wraps all direct `vis-timeline` calls.
+  * Prevents leakage of third-party APIs into components or facades.
+
+```ts filename="timeline/timeline.adapter.ts"
+export class TimelineAdapter {
+  private tl?: Timeline;
+  init(cfg: TimelineInit) { this.tl = new Timeline(cfg.host, cfg.items, cfg.groups, cfg.options); }
+  update(data: Partial<TimelineInit>) { this.tl?.setOptions(data.options ?? {}); }
+  destroy() { this.tl?.destroy(); this.tl = undefined; }
+}
+```
+
+### Module Federation Integration
+
+* **Manifest-Driven Loading**
+
+```json filename="host/assets/mf.manifest.json"
+{
+  "scheduling": "http://localhost:4201/remoteEntry.js"
+}
+```
+
+* **Remote Routes Exported**
+
+```ts filename="remote/routes.ts"
+export const SCHEDULING_ROUTES: Route[] = [
+  { path: '', component: GanttPage },
+  { path: 'gantt', component: GanttPage }
+];
+```
+
+* **Runtime Config via DI Tokens**
+
+```ts filename="tokens/gantt.config.ts"
+export interface GanttConfig { apiBase: string; featureFlags?: Record<string, boolean>; }
+export const GANTT_CONFIG = new InjectionToken<GanttConfig>('GANTT_CONFIG', {
+  factory: () => ({ apiBase: '/api/scheduling' })
+});
+```
+
+### State Management
+
+* **Signal-Driven State**
+
+```ts filename="state/gantt.facade.ts"
+readonly viewport = signal<TimeWindow>({ start, end });
+readonly selection = signal<Id[]>([]);
+readonly vessels = computed(() => selectVessels(this.store(), this.viewport()));
+```
+
+* **Selectors Are Pure Functions**: `gantt.selectors.ts` provides deterministic derivations.
+* **Session Persistence**: `session-state.service.ts` ensures operator view state is restored on reload.
+
+### Testing Strategy
+
+```ts filename="components/toolbar.component.spec.ts"
+it('emits zoomIn intent', () => {
+  const fixture = TestBed.createComponent(ToolbarComponent);
+  const cmp = fixture.componentInstance;
+  spyOn(cmp.zoomIn, 'emit');
+  const button = fixture.debugElement.query(By.css('.zoom-in'));
+  button.triggerEventHandler('click');
+  expect(cmp.zoomIn.emit).toHaveBeenCalled();
+});
+```
+
+### Performance & Resilience
+
+* Virtualization for large datasets.
+* Debouncing timeline events like `rangechanged`.
+* Explicit cleanup on destroy (`timeline.destroy()`).
+
+### Accessibility & UX
+
+* Toolbar buttons include `aria-label` attributes.
+* Keyboard shortcuts for common actions (e.g., zoom, now).
+* High-contrast mode supported via Tailwind utilities or CSS variables.
+
+### File Structure
+An example file structure for the Scheduling MFE: Gantt Interface.
+
+<FileTree>
+  <FileTree.Folder name="scheduling-mfe" defaultOpen>
+    <FileTree.Folder name="pages" defaultOpen>
+      <FileTree.Folder name="views" defaultOpen>
+        <FileTree.Folder name="gantt" defaultOpen>
+          <FileTree.File name="gantt.page.ts" />
+          <FileTree.File name="gantt.page.html" />
+          <FileTree.File name="gantt.page.css" />
+        </FileTree.Folder>
+      </FileTree.Folder>
+    </FileTree.Folder>
+    <FileTree.Folder name="state" defaultOpen>
+      <FileTree.File name="gantt.facade.ts" />
+      <FileTree.File name="gantt.models.ts" />
+      <FileTree.File name="gantt.selectors.ts" />
+    </FileTree.Folder>
+    <FileTree.Folder name="timeline" defaultOpen>
+      <FileTree.File name="timeline.adapter.ts" />
+      <FileTree.Folder name="plugins" defaultOpen>
+        <FileTree.File name="background-columns.directive.ts" />
+        <FileTree.File name="selection-sync.directive.ts" />
+        <FileTree.File name="window-sync.directive.ts" />
+        <FileTree.File name="resize-observer.directive.ts" />
+      </FileTree.Folder>
+    </FileTree.Folder>
+    <FileTree.Folder name="components" defaultOpen>
+      <FileTree.File name="toolbar.component.ts" />
+      <FileTree.File name="overview.component.ts" />
+      <FileTree.File name="item.component.ts" />
+    </FileTree.Folder>
+    <FileTree.Folder name="services" defaultOpen>
+      <FileTree.File name="session-state.service.ts" />
+    </FileTree.Folder>
+    <FileTree.Folder name="tokens" defaultOpen>
+      <FileTree.File name="gantt.config.ts" />
+    </FileTree.Folder>
+    <FileTree.Folder name="remote" defaultOpen>
+      <FileTree.File name="remote-entry.module.ts" />
+      <FileTree.File name="routes.ts" />
+    </FileTree.Folder>
+    <FileTree.Folder name="assets" defaultOpen>
+      <FileTree.Folder name="styles" />
+    </FileTree.Folder>
+    <FileTree.Folder name="testing" defaultOpen>
+      <FileTree.File name="gantt.facade.spec.ts" />
+      <FileTree.File name="timeline.adapter.spec.ts" />
+      <FileTree.File name="toolbar.component.spec.ts" />
+    </FileTree.Folder>
+  </FileTree.Folder>
+  
+</FileTree>
+
+---
+
+## Angular DI Examples
+
+### Component Decorator
+
+```ts filename="components/toolbar.component.ts"
+import { Component, EventEmitter, Output } from '@angular/core';
+import { GanttFacade } from '../state/gantt.facade';
+
+@Component({
+  selector: 'app-toolbar',
+  standalone: true,
+  templateUrl: './toolbar.component.html',
+})
+export class ToolbarComponent {
+  @Output() zoomIn = new EventEmitter<void>();
+  @Output() zoomOut = new EventEmitter<void>();
+
+  constructor(public facade: GanttFacade) {}
+}
+```
+
+### Injectable Service
+
+```ts filename="services/session-state.service.ts"
+import { Injectable } from '@angular/core';
+
+@Injectable({ providedIn: 'root' })
+export class SessionStateService {
+  get(key: string): string | null {
+    return sessionStorage.getItem(key);
+  }
+  set(key: string, value: string) {
+    sessionStorage.setItem(key, value);
+  }
+}
+```
+
+### InjectionToken Consumer
+
+```ts filename="state/gantt.facade.ts"
+import { Inject, Injectable } from '@angular/core';
+import { GANTT_CONFIG, GanttConfig } from '../tokens/gantt.config';
+
+@Injectable({ providedIn: 'root' })
+export class GanttFacade {
+  constructor(@Inject(GANTT_CONFIG) private config: GanttConfig) {}
+
+  loadData() {
+    return fetch(`${this.config.apiBase}/items`);
+  }
+}
+```
+
+### Remote Entry Module
+
+```ts filename="remote/remote-entry.module.ts"
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { SCHEDULING_ROUTES } from './routes';
+
+@NgModule({
+  imports: [RouterModule.forChild(SCHEDULING_ROUTES)],
+})
+export class RemoteEntryModule {}
+```
+
+---
+
+## Recommendations
+
+* **Shared Dependencies:** Ensure Angular, RxJS, PrimeNG, etc. are marked as shared in Module Federation to avoid duplication.
+* **Error Handling:** Facades should surface error signals for failed API calls or adapter issues.
+* **Cross-MFE Communication:** When needed, define typed events (broadcast channel or host services).
+* **E2E Integration Tests:** Use Cypress/Playwright to verify manifest-driven loading and runtime route injection.
+
+---
+
+## Conclusion
+
+The Scheduling MFE architecture is **sound, maintainable, and extensible**. It emphasizes clean layering (facade + adapter), predictable state, runtime configurability, and strong testing. With small enhancements around error handling and integration testing, it will scale seamlessly across all MFEs in the PMIS suite and serve as a best-in-class reference moving forward.

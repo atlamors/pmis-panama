@@ -1,0 +1,17 @@
+name: Docs Consistency
+on: [pull_request]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check manifest path in host
+        run: |
+          grep -R "mf.manifest.json" pmis-frontend/host/src/main.ts
+      - name: Check gateway route prefix
+        run: |
+          grep -R "/api/scheduling/" pmis-backend/api-gateway/Program.cs
+      - name: Check ports page exists
+        run: |
+          test -f pmis-docs/content/reference/ports.mdx
+

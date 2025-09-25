@@ -4,10 +4,13 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "predev": "pnpm build",
     "dev": "next --turbopack",
     "build": "next build",
+    "postbuild": "pagefind --site .next/server/app --output-path public/_pagefind",
     "start": "next start -p 3000",
     "export": "next export",
+    "postexport": "pagefind --site out --output-path out/_pagefind",
     "clean": "rimraf .next out node_modules"
   },
   "dependencies": {
@@ -21,6 +24,7 @@
     "@types/node": "^22.10.2",
     "@types/react": "^18.3.17",
     "@types/react-dom": "^18.3.5",
+    "pagefind": "^1.4.0",
     "rimraf": "^5.0.5",
     "typescript": "^5.9.2"
   }

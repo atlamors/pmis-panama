@@ -128,10 +128,10 @@ Notes:
 * Ensure **remotes** have HMR and LiveReload disabled in `angular.json`.
 * Only the **host** injects a dev-server client.
 
-### ❌ Styling not applied (Tailwind CSS v4)
+### ❌ Styling not applied (Tailwind CSS v3.4 with v4-style import)
 
 * Verify each app includes `src/styles.css` in its `angular.json -> build.options.styles`.
-* Tailwind v4 uses a single import in your global stylesheet:
+* Our build supports the simplified v4-style single import in global stylesheet:
 
   ```css
   @import "tailwindcss";
