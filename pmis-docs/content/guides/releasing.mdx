@@ -1,0 +1,28 @@
+# Releasing
+
+Conventional Commits → semantic-release (or manual semver bump) → tag → deploy.
+
+## Steps
+
+1. Merge to `main`
+2. Bump version (`pnpm changeset` or manual)
+3. Generate changelog
+4. Tag `vX.Y.Z`
+5. CI builds & deploys images/apps
+
+## PR body template
+
+```md
+### Summary
+- …
+
+### Risk / Rollback
+- …
+
+### Docs Updated?
+- [ ] Ports page
+- [ ] API examples
+- [ ] Contributing/Branching
+```
+
+

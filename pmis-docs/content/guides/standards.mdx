@@ -1,0 +1,25 @@
+# Inline Documentation Standards
+
+- Every exported class/function must have a JSDoc/XML summary.
+- Use the `loadRemoteRoutes` doc style as the reference.
+- Review gate: PRs missing summaries are blocked.
+
+## Angular example
+
+```ts
+/**
+ * SidebarComponent controls the global navigation and the user account menu.
+ * - Emits route navigations via Router
+ * - Persists collapsed state in localStorage
+ */
+```
+
+## .NET example
+
+```csharp
+/// <summary>
+/// Health endpoint reporting service liveness for orchestrators.
+/// </summary>
+```
+
+

@@ -1,0 +1,69 @@
+# Testing Strategy
+
+**Coverage policy:** ≥70%, never decrease per PR.
+
+## Frontend
+
+Angular unit tests (Jasmine/Karma); location `*.spec.ts`.
+
+Run:
+
+```bash
+pnpm test:fe
+```
+
+Example:
+
+```ts
+import { TestBed } from '@angular/core/testing';
+import { SidebarComponent } from './sidebar.component';
+
+describe('SidebarComponent', () => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [SidebarComponent]
+    }).compileComponents();
+  });
+
+  it('toggles account menu', () => {
+    const fixture = TestBed.createComponent(SidebarComponent);
+    const c = fixture.componentInstance;
+    expect(c.accountOpen()).toBeFalse();
+    c.toggleAccountMenu();
+    expect(c.accountOpen()).toBeTrue();
+  });
+});
+```
+
+## Backend
+
+.NET xUnit tests.
+
+Run:
+
+```bash
+pnpm test:be
+```
+
+Example:
+
+```csharp
+using Xunit;
+
+public class HealthTests {
+  [Fact]
+  public void Health_Is_Ok() {
+    Assert.Equal("ok", "ok");
+  }
+}
+```
+
+## Integration tests
+
+For new/changed APIs; prefer in-memory DB/test server.
+
+## E2E (future)
+
+Cypress/Playwright (placeholder).
+
+

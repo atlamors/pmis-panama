@@ -1,0 +1,34 @@
+# Branching Workflow
+
+Strategy: Gitflow-lite (`main`, `develop`, short-lived `feature/`, `fix/`, `hotfix/`).
+
+## Workflow
+
+- Branch from `develop` for features/fixes
+- Open PR → CI (build/lint/test) must pass
+- Merge to `develop`
+- Release: merge `develop` → `main` + tag
+- Hotfix: branch from `main`, merge back to `main` and `develop`
+
+```mermaid
+gitGraph
+  commit id: "main"
+  branch develop
+  commit id: "d1"
+  branch feature/ABC-123-filters
+  commit id: "f1"
+  commit id: "f2"
+  checkout develop
+  merge feature/ABC-123-filters
+  commit id: "d2"
+  checkout main
+  merge develop tag: "v0.2.0"
+  branch hotfix/urgent
+  commit id: "h1"
+  checkout main
+  merge hotfix/urgent tag: "v0.2.1"
+  checkout develop
+  merge hotfix/urgent
+```
+
+
