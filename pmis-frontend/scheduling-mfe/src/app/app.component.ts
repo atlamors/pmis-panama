@@ -4,6 +4,10 @@ import { HeaderComponent } from './layout/header/header.component';
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { FooterComponent } from './layout/footer/footer.component';
 
+/**
+ * Root shell component for the Scheduling MFE.
+ * Hosts header, sidebar, footer, and the routed content via `RouterOutlet`.
+ */
 @Component({
     selector: 'scheduling-root',
     standalone: true,

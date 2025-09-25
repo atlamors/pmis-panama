@@ -24,7 +24,7 @@ import {
 // Routes
 const routes: Routes = [
     // Default route
-    { path: '' },
+    { path: '', pathMatch: 'full', redirectTo: 'scheduling' },
     // Local routes
 
     // Remote routes

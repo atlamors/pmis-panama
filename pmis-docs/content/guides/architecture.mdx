@@ -12,21 +12,14 @@ flowchart LR
  subgraph FE["Frontend"]
         host["Angular Host App"]
         mfe1["Scheduling MFE"]
-        mfe2["Accounting MFE"]
-        mfe3["Operations MFE"]
-        mfe4["Customs MFE"]
-        mfe5["Resources MFE"]
-        mfe6["Etc..."]
+        mfe2["Resources MFE"]
+        mfe3["Etc..."]
   end
  subgraph SVC[".NET Core Services"]
-        service6["Etc..."] 
-        service1["Scheduling Service"]
-        service2["Accounting Service"]
-        service3["Operations Service"]
-        service4["Customs Service"]
-        service5["Resources Service"]
-        service7["Scheduling Service"]
-        service8["Auth Service"]
+        service1["Auth Service"]
+        service2["Scheduling Service"]
+        service3["Resources Service"]
+        service4["Etc..."]
   end
  subgraph BE["Backend"]
         gw["API Gateway"]
@@ -37,25 +30,12 @@ flowchart LR
     host -- Module Federation --> mfe1
     host -- Module Federation --> mfe2
     host -- Module Federation --> mfe3
-    host -- Module Federation --> mfe4
-    host -- Module Federation --> mfe5
-    host -- Module Federation --> mfe6
     host -- REST/JSON --> gw
-    mfe6 -- REST/JSON --> gw
+    mfe1 -- REST/JSON --> gw
     mfe2 -- REST/JSON --> gw
     mfe3 -- REST/JSON --> gw
-    mfe4 -- REST/JSON --> gw
-    mfe5 -- REST/JSON --> gw
-    mfe1 -- REST/JSON --> gw
-    gw --> service7 & service8 & service1 & service2 & service3 & service4 & service5 & service6
-    service7 --> db[("Azure SQL")]
-    service8 --> db
-    service1 --> db
-    service2 --> db
-    service3 --> db
-    service4 --> db
-    service5 --> db
-    service6 --> db
+    gw --> service1 & service2 & service3 & service4
+    service1 & service2 & service3 & service4 --> db[("Azure SQL")]
 ```
 
 ---
@@ -127,48 +107,3 @@ flowchart LR
   Next.js-based documentation site framework.
 * **MDX (Markdown + JSX)** — [https://mdxjs.com](https://mdxjs.com)
   Write JSX in Markdown documents.
-
----
-
-## Integration
-
-### Current State
-
-* **API contract**
-  All frontend requests go through the **API Gateway** at `/api/*`. MFEs use relative paths; the gateway routes to services.
-
-* **Module Federation**
-  Host declares stub remotes in webpack; the **only source of truth** for remote URLs is the manifest served at `/assets/mf.manifest.json`.
-  Shared dependencies: Angular core/common/router and RxJS (singletons, strict version).
-  `zone.js` is imported locally and not shared.
-
-* **Development workflow**
-  Host on **:4200**, remotes on **:4201+**. Only the host injects a dev-server client. Remotes run quietly (no HMR/live reload).
-  Cross‑module HMR is **not implemented**; full reload is used for stability.
-
-* **Production / Preview workflow**
-  Build with `ng build -c production`. Static servers (`serve -s`) run on normalized ports (host `:5000`, remotes `:5001+`).
-  CORS enabled for remote assets. SPA fallback ensures deep links (`/settings`, `/scheduling`) work.
-
-* **Manifest handling**
-  Host build includes `/assets/mf.manifest.json` in `dist`. At runtime the host loads this manifest and wires remotes dynamically.
-  Developers update the manifest; webpack configs remain stable.
-
-### Future Direction
-
-* **Cross-module HMR**: backlog — host HMR with MF pre-init for hot updates without reload storms.
-* **Shared libraries**: introduce `@pmis-frontend/ui`, `@pmis-frontend/api` as duplication emerges.
-* **Auth & observability**: wire host and MFEs to Auth Service and logging/telemetry via the gateway.
-* **Additional MFEs**: extend manifest and host routing for Reports, Messages, and other domains.
-
----
-
-## First Integration Checklist
-
-* [ ] Gateway running on `:5000`; host proxy `/api → :5000`.
-* [ ] Manifest served at `/assets/mf.manifest.json` and loaded by host.
-* [ ] Scheduling MFE loads via `/scheduling` and calls gateway APIs.
-* [ ] CORS confirmed in preview/prod (host ↔ remote).
-* [ ] Tailwind styles active in host and remotes (v4 `@import "tailwindcss";`).
-* [ ] SPA fallback working for deep links.
-* [ ] Sidebar links match implemented routes; unknown routes redirect to default.

@@ -1,9 +1,10 @@
 /* Simple, framework-agnostic layout scaffold. Replace with Tailwind if desired. */
 :host {
-    display: contents;
+    display: block;
+    height: 100%;
 }
 
-.app-shell {
+.scheduling-shell {
     display: flex;
     height: 100%;
 }

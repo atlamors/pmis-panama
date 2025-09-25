@@ -4,7 +4,7 @@
     <!-- Top: brand + collapse -->
     <div class="host-flex host-items-center host-gap-3 host-px-1 host-h-[var(--header-height)]">
         <button (click)="toggle()" aria-label="Toggle sidebar"
-            class="host-flex host-items-center host-justify-center host-w-9 host-h-9 host-rounded-full host-border host-border-border host-text-text host-bg-transparent host-hover:bg-surface-2">
+            class="host-flex host-items-center host-justify-center host-w-9 host-h-9 host-rounded-full host-border host-border-border host-text-text host-bg-transparent hover:host-bg-surface-2">
             @if (isOpen) {
             <svg width="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -23,7 +23,7 @@
         @if (isOpen) {
         <span class="fade-in host-flex host-flex-row host-items-center host-gap-2">
             <span class="host-inline-block host-fill-white">
-                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 348 368">
+                <svg class="host-w-6 host-h-6" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 348 368">
                     <polygon
                         points="347 167 227.4 240 243 367 150.5 290 33 365.9 90 252 24.5 252 1 231 126 231 90 300 156.5 258.3 211 304 201.1 231.1 271 188 196 188 193 167 347 167" />
                     <path
@@ -46,8 +46,9 @@
 
         @for (item of homeItems; track item.id) {
         <a [routerLink]="item.route"
-            routerLinkActive="host-bg-[hsl(var(--accent)/.12)] host-border host-border-[hsl(var(--accent)/.25)]"
-            class="sb-item host-gap-3 host-px-3 host-py-2 host-mb-1 host-rounded-lg host-text-text host-border host-border-transparent host-hover:bg-surface-2 host-transition-colors">
+            routerLinkActive="host-bg-[hsl(var(--accent)/.12)] host-border-[hsl(var(--accent)/.25)]"
+            class="sb-item host-gap-3 host-px-3 host-py-2 host-mb-1 host-rounded-lg host-text-text 
+                    host-border host-border-[hsl(var(--accent)/0)] hover:host-bg-surface-2 host-transition-colors">
             <ng-icon height="16" width="16" [name]="item.icon" class="sb-glyph w-4 h-4"></ng-icon>
             @if (isOpen) {
             <span class="fade-in host-truncate host-leading-[var(--sb-icon-size)]">{{ item.label }}</span>
@@ -74,7 +75,7 @@
 
         @for (op of canalOps; track op.id) {
         <a [routerLink]="op.route" routerLinkActive="host-bg-[hsl(var(--accent)/.12)] host-border host-border-[hsl(var(--accent)/.25)]"
-            class="sb-item host-gap-3 host-px-3 host-py-2 host-mb-1 host-rounded-lg host-text-text host-border host-border-transparent host-hover:bg-surface-2 host-transition-colors">
+            class="sb-item host-gap-3 host-px-3 host-py-2 host-mb-1 host-rounded-lg host-text-text host-border host-border-transparent hover:host-bg-surface-2 host-transition-colors">
             <ng-icon [name]="op.icon" class="sb-glyph host-w-6 host-h-6"></ng-icon>
             @if (isOpen) {
             <span class="host-truncate host-fade-in host-leading-[var(--sb-icon-size)]">{{ op.label }}</span>
@@ -90,7 +91,7 @@
         <!-- Account button -->
         <button type="button" (click)="toggleAccountMenu($event)" [attr.aria-expanded]="isMenuOpen" aria-haspopup="menu"
             aria-controls="account-menu" class="sb-account group host-w-full host-gap-3 host-px-3 host-min-h-[var(--header-height)] host-py-2 host-rounded-lg host-text-text host-border host-border-border
-            border-fade-out host-transition-colors host-duration-150 host-ease-out host-focus:outline-none
+            border-fade-out host-transition-colors host-duration-150 host-ease-out focus:host-outline-none
             host-flex host-flex-row host-items-center host-gap-3">
             <div
                 class="sb-avatar host-flex host-items-center host-justify-center host-border host-border-border host-rounded-full host-h-10 host-w-10 host-group-hover:bg-surface-2">
@@ -112,15 +113,15 @@
                host-rounded-[var(--r-default)] host-border host-border-border host-bg-bg host-text-text host-overflow-hidden"
             (keydown.escape)="closeAccountMenu()">
             <button role="menuitem" (click)="go('/profile')" class="host-grid host-grid-cols-[20px,1fr] host-items-center host-gap-2 host-w-full host-text-left
-                host-px-3 host-py-2 host-hover:bg-surface-2 host-focus:outline-none
-                host-focus:ring-2 host-focus:ring-[hsl(var(--accent)/.25)]">
+                host-px-3 host-py-2 hover:host-bg-surface-2 focus:host-outline-none
+                focus:host-ring-2 focus:host-ring-[hsl(var(--accent)/.25)]">
                 <i class="pi pi-user host-text-[16px]"></i>
                 <span class="host-text-[13px]">Profile</span>
             </button>
 
             <button role="menuitem" (click)="go('/settings')" class="host-grid host-grid-cols-[20px,1fr] host-items-center host-gap-2 host-w-full host-text-left
-                 host-px-3 host-py-2 host-hover:bg-surface-2 host-focus:outline-none
-                 host-focus:ring-2 host-focus:ring-[hsl(var(--accent)/.25)]">
+                 host-px-3 host-py-2 hover:host-bg-surface-2 focus:host-outline-none
+                 focus:host-ring-2 focus:host-ring-[hsl(var(--accent)/.25)]">
                 <i class="pi pi-cog host-text-[16px]"></i>
                 <span class="text-[13px]">Settings</span>
             </button>
@@ -128,8 +129,8 @@
             <div class="host-h-px host-my-1 host-bg-[hsl(var(--border))]/80"></div>
 
             <button role="menuitem" (click)="signOut()" class="host-grid host-grid-cols-[20px,1fr] host-items-center host-gap-2 host-w-full host-text-left
-                 host-px-3 host-py-2 host-hover:bg-surface-2 host-focus:outline-none
-                 host-focus:ring-2 host-focus:ring-[hsl(var(--accent)/.25)]">
+                 host-px-3 host-py-2 hover:host-bg-surface-2 focus:host-outline-none
+                 focus:host-ring-2 focus:host-ring-[hsl(var(--accent)/.25)]">
                 <i class="pi pi-sign-out host-text-[16px]"></i>
                 <span class="host-text-[13px]">Sign out</span>
             </button>

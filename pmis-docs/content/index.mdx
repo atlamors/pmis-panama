@@ -5,31 +5,37 @@ PMIS is a **Port Management Information System** built with a **micro-frontend**
 ```mermaid
 ---
 config:
-  layout: dagre
-  theme: mc
+    layout: dagre
+    theme: mc
 ---
 flowchart LR
-  subgraph FE["Frontend"]
-    host["Angular Host App"]
-    mfe1["Scheduling MFE"]
+ subgraph FE["Frontend"]
+        host["Angular Host App"]
+        mfe1["Scheduling MFE"]
+        mfe2["Resources MFE"]
+        mfe3["Etc..."]
   end
-  subgraph SVC[".NET Core Services"]
-    sched["Scheduling Service"]
-    auth["Auth Service"]
+ subgraph SVC[".NET Core Services"]
+        service1["Auth Service"]
+        service2["Scheduling Service"]
+        service3["Resources Service"]
+        service4["Etc..."]
   end
-  subgraph BE["Backend"]
-    gw["API Gateway"]
-    SVC
+ subgraph BE["Backend"]
+        gw["API Gateway"]
+        SVC
   end
-  user["Operator / User"] -- HTTPS --> browser["Browser"]
-  browser --> host
-  host -- Module Federation --> mfe1
-  host -- REST/JSON --> gw
-  mfe1 -- REST/JSON --> gw
-  gw --> sched & auth
-  sched --> db[("Azure SQL")]
-  auth --> db
-  sched -- Events / telemetry --> obs[("Observability")]
+    user["Operator / User"] -- HTTPS --> browser["Browser"]
+    browser --> host
+    host -- Module Federation --> mfe1
+    host -- Module Federation --> mfe2
+    host -- Module Federation --> mfe3
+    host -- REST/JSON --> gw
+    mfe1 -- REST/JSON --> gw
+    mfe2 -- REST/JSON --> gw
+    mfe3 -- REST/JSON --> gw
+    gw --> service1 & service2 & service3 & service4
+    service1 & service2 & service3 & service4 --> db[("Azure SQL")]
 ```
 
 ---
@@ -76,11 +82,14 @@ flowchart LR
 ## Local Defaults
 
 * **Ports (all environments):**
-
   * Host → `:4200`
-  * Scheduling MFE → `:4201`
+  * MFE's → `:4201-4999`
+  * API Gateway → `:5000`
+  * Auth Service → `:5001`
+  * API Services → `:5100-5999`
+  * Documentation → `:3000`
 * **API Gateway:** `/api/*` (served by backend gateway)
-* **Module Federation manifest:** host serves `/assets/mf.manifest.json` as the single source of truth for remote URLs.
+* **Module Federation manifest:** host serves `/assets/router.manifest.json` as the single source of truth for remote URLs.
 
 ---
 
@@ -89,6 +98,12 @@ flowchart LR
 * **Frontend**: Angular 20, Module Federation, Tailwind CSS (v4)
 * **Backend**: ASP.NET Core 8, EF Core, YARP gateway
 * **Docs**: Nextra + MDX, with Mermaid diagrams
+
+---
+
+## Known Issues
+
+ * **HMR disabled due to infinite reload in dev**: This is a common issue with Module Federation and Angular. It is caused by the way the host app loads the remote app. The host app loads the remote app and then the remote app loads the host app. This causes a loop and the infinite reload.
 
 
 
