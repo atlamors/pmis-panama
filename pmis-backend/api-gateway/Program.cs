@@ -9,7 +9,7 @@ builder.Services.AddReverseProxy().LoadFromMemory(
             ClusterId = "schedulingCluster",
             Match = new Yarp.ReverseProxy.Configuration.RouteMatch
             {
-                Path = "/scheduling/{**catchall}"
+                Path = "/api/scheduling/{**catchall}"
             },
             Transforms = new[]
             {
@@ -27,7 +27,7 @@ builder.Services.AddReverseProxy().LoadFromMemory(
             ClusterId = "schedulingCluster",
             Destinations = new System.Collections.Generic.Dictionary<string, Yarp.ReverseProxy.Configuration.DestinationConfig>
             {
-                { "d1", new Yarp.ReverseProxy.Configuration.DestinationConfig { Address = "http://localhost:5073" } }
+                { "d1", new Yarp.ReverseProxy.Configuration.DestinationConfig { Address = "http://localhost:5001" } }
             }
         }
     }
