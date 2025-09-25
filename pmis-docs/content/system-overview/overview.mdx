@@ -1,0 +1,29 @@
+# System Overview
+
+## Current (MVP)
+
+- Host MFE (Angular)
+- Scheduling MFE (Angular)
+- API Gateway (YARP)
+- Scheduling Service (.NET)
+- No Auth yet (authentication planned; routes are open in dev)
+
+```mermaid
+graph LR
+  Browser["Browser"]
+  Host["Host (Angular)"]
+  SchedulingMFE["Scheduling MFE (Angular)"]
+  APIGateway["API Gateway (YARP)"]
+  SchedulingService["Scheduling Service (.NET)"]
+
+  Browser -->|"/"| Host
+  Host -->|Module Federation| SchedulingMFE
+  Browser -->|"/api/*"| APIGateway
+  APIGateway -->|"http://localhost:5001"| SchedulingService
+```
+
+## Planned
+
+- Additional MFEs: Accounting, Operations, Customs
+- Auth Service (OIDC)
+- Unified contract-driven clients in `/packages/pmis-shared`
