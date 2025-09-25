@@ -16,38 +16,46 @@ pmis-backend/
 ## Prerequisites
 
 - Node.js ≥ 18 (recommend 20+)
-- npm ≥ 9
+- pnpm (preferred)
 - .NET 8 SDK (for backend apps)
+
+Install PNPM:
+
+```bash
+npm i -g pnpm
+# or
+corepack enable && corepack prepare pnpm@latest --activate
+```
 
 ## Install
 
 - Install in root and all workspaces:
 
 ```
-npm run install:all
+pnpm install
 ```
 
 - CI install:
 
 ```
-npm run ci:all
+pnpm install --frozen-lockfile
 ```
 
 - Reinstall everything (cleans node_modules):
 
 ```
-npm run reinstall:all
+pnpm clean && pnpm install
 ```
 
 ## Common scripts
 
-- Dev (all): `npm run dev`
-- Dev (frontend only): `npm run dev:fe`
-- Dev (backend only): `npm run dev:be`
-- Build (all): `npm run build`
-- Test (all): `npm run test`
-- Clean: `npm run clean`
-- Enforce TS (allows common CJS build configs): `npm run enforce:ts`
+- Dev (all): `pnpm dev`
+- Dev (frontend only): `pnpm dev:fe`
+- Dev (backend only): `pnpm dev:be`
+- Build (all): `pnpm build`
+- Test (all): `pnpm test`
+- Clean: `pnpm clean`
+- Enforce TS (allows common CJS build configs): `pnpm enforce:ts`
 
 ## Frontend notes
 
@@ -57,7 +65,7 @@ npm run reinstall:all
 
 ## Backend notes
 
-- `api-gateway`: YARP reverse proxy, `/scheduling/*` → `http://localhost:5073`
+- `api-gateway`: YARP reverse proxy, `/api/scheduling/*` → `http://localhost:5001`
 - `scheduling`: OpenAPI + Scalar UI enabled
 
 ---
