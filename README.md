@@ -37,7 +37,7 @@ pmis-backend/
    pnpm install
    ```
 
-## Running Locally
+### Running Locally
 
 3. **Start the development servers** (in separate terminals if not using the all-in-one command):
 
