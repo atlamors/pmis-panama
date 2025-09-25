@@ -6,14 +6,14 @@
 @tailwind utilities;
 
 /* Global baseline + dark theme tokens */
-:root { 
-    
+:root {
+
     /* Global Typography */
     --font-sans: 'Inter', sans-serif;
     --font-size-base: 14px;
     --font-line-height-base: 1.5;
     --font-weight-base: 400;
-    
+
     /* Global Layout */
     --header-height: 64px;
     --sidebar-width-open: 256px;
@@ -29,8 +29,14 @@
     --border-width-remote: 2px;
 
     /* Global Shadow */
-    --shadow-default: 0 1px 0 hsl(var(--border) / .6), 0 0 0 1px hsl(var(--border) / .4) inset;
-    --shadow-remote: 0 1px 0 hsl(var(--border) / .6), 0 0 0 1px hsl(var(--border) / .4) inset;
+    --shadow-default: 
+        0 1px 0 hsl(var(--border) / .6),
+        0 0 0 1px hsl(var(--border) / .4) inset,
+        0 12px 30px hsl(var(--shadow) / .35);
+    --shadow-remote: 
+        0 1px 0 hsl(var(--border) / .6),
+        0 0 0 1px hsl(var(--border) / .4) inset,
+        0 12px 30px hsl(var(--shadow) / .35);
 
     /* Global Colors */
     --bg: 222 6% 7%;
@@ -46,5 +52,7 @@
     --r-remote: 1.25rem;
 
     /* Global Animations */
-    --sb-transition: width .35s ease, padding .35s ease;
+    --sb-transition: 
+        width .35s ease, 
+        padding .35s ease;
 }
