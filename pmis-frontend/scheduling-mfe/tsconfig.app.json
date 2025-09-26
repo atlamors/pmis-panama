@@ -2,7 +2,31 @@
     "extends": "./tsconfig.json",
     "compilerOptions": {
         "outDir": "./dist/out-tsc/app",
-        "types": []
+        "types": [],
+        "baseUrl": "src",
+        "paths": {
+            "@pages/*": [
+                "app/pages/*"
+            ],
+            "@state/*": [
+                "app/state/*"
+            ],
+            "@domain/*": [
+                "app/domain/*"
+            ],
+            "@timeline/*": [
+                "app/timeline/*"
+            ],
+            "@services/*": [
+                "app/services/*"
+            ],
+            "@components/*": [
+                "app/components/*"
+            ],
+            "@tokens/*": [
+                "app/tokens/*"
+            ]
+        }
     },
     "include": [
         "src/**/*.ts"

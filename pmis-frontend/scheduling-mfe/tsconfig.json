@@ -1,14 +1,42 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "outDir": "./dist/out-tsc",
-    "types": []
-  },
-  "files": [],
-  "include": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.spec.json" }
-  ]
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "outDir": "./dist/out-tsc",
+        "types": [],
+        "baseUrl": "src",
+        "paths": {
+            "@pages/*": [
+                "app/pages/*"
+            ],
+            "@state/*": [
+                "app/state/*"
+            ],
+            "@domain/*": [
+                "app/domain/*"
+            ],
+            "@timeline/*": [
+                "app/timeline/*"
+            ],
+            "@services/*": [
+                "app/services/*"
+            ],
+            "@components/*": [
+                "app/components/*"
+            ],
+            "@tokens/*": [
+                "app/tokens/*"
+            ]
+        },
+        "experimentalDecorators": true
+    },
+    "files": [],
+    "include": [],
+    "references": [
+        {
+            "path": "./tsconfig.app.json"
+        },
+        {
+            "path": "./tsconfig.spec.json"
+        }
+    ]
 }
-
