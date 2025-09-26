@@ -2524,6 +2524,10 @@ video {
   flex-grow:1
 }
 
+.transform{
+  transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
+}
+
 .flex-col{
   flex-direction:column
 }
@@ -2608,43 +2612,6 @@ video {
 .text-zinc-500{
   --tw-text-opacity:1;
   color:rgb(113 113 122 / var(--tw-text-opacity, 1))
-}
-
-/* Global baseline + dark theme tokens */
-
-:root {
-  /* Global Typography */
-  --font-sans: 'Inter', sans-serif;
-  --font-size-base: 14px;
-  --font-line-height-base: 1.5;
-  --font-weight-base: 400;
-  /* Global Layout */
-  --header-height: 64px;
-  --sidebar-width-open: 256px;
-  --sidebar-width-collapsed: 64px;
-  --footer-height: 0;
-  /* Global Spacing */
-  --sp-default: 1rem;
-  --sp-remote: 1.5rem;
-  /* Global Border */
-  --border-width-default: 1px;
-  --border-width-remote: 2px;
-  /* Global Shadow */
-  --shadow-default: 0 1px 0 hsl(var(--border) / .6), 0 0 0 1px hsl(var(--border) / .4) inset;
-  --shadow-remote: 0 1px 0 hsl(var(--border) / .6), 0 0 0 1px hsl(var(--border) / .4) inset;
-  /* Global Colors */
-  --bg: 222 6% 7%;
-  --surface: 220 7% 10%;
-  --surface-2: 216 9% 12%;
-  --text: 0 0% 90%;
-  --muted: 240 3% 66%;
-  --border: 216 7% 19%;
-  --accent: 217 98% 70%;
-  /* Global Radius */
-  --r-default: .5rem;
-  --r-remote: 1.25rem;
-  /* Global Animations */
-  --sb-transition: width .35s ease, padding .35s ease;
 }
 
 .hover\:bg-zinc-800\/50:hover{

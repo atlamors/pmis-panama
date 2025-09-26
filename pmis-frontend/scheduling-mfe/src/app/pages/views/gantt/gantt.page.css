@@ -9,38 +9,37 @@
 /* --- Local tokens (HSL tuples) --- */
 :host {
     /* do NOT re-declare global tokens*/
-    --gannt-grid: 220 16% 20%;
-    --gannt-accent: 258 90% 66%;
-    --gannt-accent-weak: 258 90% 66% / 0.35;
+    --gantt-grid: 220 16% 20%;
+    --gantt-grid-minor: 220 16% 20%;
+    --gantt-grid-major: 220 16% 20%;
+    --gantt-accent: 258 90% 66%;
+    --gantt-accent-weak: 258 90% 66% / 0.35;
 
     display: block;
     height: 100%;
     color: hsl(var(--text));
 }
 
-
-/* Page layout */
+/* page layout */
 .gantt {
     height: 100%;
     padding: .75rem;
 }
 
 .timeline-root {
-    height: 100%;
-    background: hsl(var(--surface-1));
-    border: 1px solid hsl(var(--border));
-    border-radius: 12px;
-    box-shadow: 0 12px 30px hsl(var(--shadow));
+    background: hsl(var(--bg));
+    border-radius: var(--r-default);
     overflow: hidden;
 }
 
-/* Base vis overrides */
+/* make outlet child fill */
 :host ::ng-deep .vis-timeline {
     background: transparent !important;
+    border: none !important;
     font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
 }
 
-/* Panels & borders */
+/* panels & borders */
 :host ::ng-deep .vis-panel.vis-left,
 :host ::ng-deep .vis-panel.vis-center,
 :host ::ng-deep .vis-panel.vis-right {
@@ -48,14 +47,14 @@
     border-color: hsl(var(--border));
 }
 
-/* Axis + grid */
+/* axis + grid */
 :host ::ng-deep .vis-time-axis .vis-text {
     color: hsl(var(--muted));
     font-size: 12px;
 }
 
 :host ::ng-deep .vis-time-axis .vis-grid.vis-vertical {
-    background-color: hsl(var(--grid));
+    background-color: hsl(var(--gantt-grid));
     opacity: .25;
 }
 
@@ -63,13 +62,13 @@
     opacity: .12;
 }
 
-/* Current time + custom time lines */
+/* current time + custom time lines */
 :host ::ng-deep .vis-current-time,
 :host ::ng-deep .vis-custom-time {
-    background-color: hsl(var(--accent));
+    background-color: hsl(var(--gantt-accent));
 }
 
-/* Group labels */
+/* group labels */
 :host ::ng-deep .vis-labelset .vis-label {
     background: hsl(var(--surface-1));
     border-color: hsl(var(--border));
@@ -81,11 +80,11 @@
     font-weight: 500;
 }
 
-/* Items */
+/* items: rounded, subtle gloss, compact text */
 :host ::ng-deep .vis-item {
     background: hsl(var(--surface-2));
     border-color: hsl(213 25% 27%);
-    /* was #334155 */
+    /* #334155 */
     color: hsl(var(--text));
     border-radius: 10px;
     padding: 6px 10px;
@@ -100,54 +99,32 @@
     box-shadow: 0 10px 24px hsl(0 0% 0% / .35);
 }
 
-/* Vessel accent */
+/* vessel accent (your className: 'vessel') */
 :host ::ng-deep .vis-item.vessel {
     background: linear-gradient(180deg,
-            hsl(var(--accent) / 0.18),
-            hsl(var(--accent) / 0.08));
-    border-color: hsl(var(--accent) / 0.55);
+            hsl(var(--gantt-accent) / 0.18),
+            hsl(var(--gantt-accent) / 0.08));
+    border-color: hsl(var(--gantt-accent) / 0.55);
 }
 
-/* Selection */
+/* selection state */
 :host ::ng-deep .vis-item.vis-selected {
-    border-color: hsl(var(--accent));
+    border-color: hsl(var(--gantt-accent));
     box-shadow:
-        0 0 0 2px hsl(var(--accent-weak)),
+        0 0 0 2px hsl(var(--gantt-accent-weak)),
         0 14px 32px hsl(0 0% 0% / .45);
 }
 
-/* Row dividers — dashed at ~20% opacity (apply to labels and groups) */
-:host ::ng-deep .vis-itemset .vis-group,
-:host ::ng-deep .vis-labelset .vis-label {
-    border-bottom: 1px dashed hsl(var(--muted) / 0.2) !important;
+/* keep rows tidy */
+:host ::ng-deep .vis-itemset .vis-group {
+    border-color: hsl(var(--border));
 }
 
-:host ::ng-deep .vis-itemset .vis-group:last-child,
-:host ::ng-deep .vis-labelset .vis-label:last-child {
-    border-bottom: none !important;
+:host ::ng-deep .vis-item-overflow {
+    color: hsl(var(--muted));
 }
 
-/* Alternating background columns (provided by directive) */
-:host ::ng-deep .vis-item.vis-background.bg-col-odd {
-    background: hsl(0 0% 100% / 0.03);
-}
-
-:host ::ng-deep .vis-item.vis-background.bg-col-even {
-    background: hsl(0 0% 100% / 0.06);
-}
-
-/* Z-order safety */
-:host ::ng-deep .vis-foreground .vis-item,
-:host ::ng-deep .vis-foreground .vis-range {
-    position: relative;
-    z-index: 2;
-}
-
-:host ::ng-deep .vis-background .vis-item {
-    z-index: 1;
-}
-
-/* Scrollbars (webkit) */
+/* scrollbars (webkit) */
 :host ::ng-deep .vis-panel::-webkit-scrollbar,
 :host ::ng-deep .vis-content::-webkit-scrollbar {
     height: 10px;
@@ -157,7 +134,7 @@
 :host ::ng-deep .vis-panel::-webkit-scrollbar-thumb,
 :host ::ng-deep .vis-content::-webkit-scrollbar-thumb {
     background: hsl(221 20% 21%);
-    /* was #2b3240 */
+    /* #2b3240 */
     border-radius: 999px;
     border: 2px solid transparent;
     background-clip: padding-box;
@@ -166,4 +143,64 @@
 :host ::ng-deep .vis-panel::-webkit-scrollbar-track,
 :host ::ng-deep .vis-content::-webkit-scrollbar-track {
     background: transparent;
+}
+
+:host ::ng-deep .vis-panel.vis-top {
+    border-left: none !important;
+}
+
+:host ::ng-deep .vis-time-axis .vis-grid.vis-major {
+    border-color: hsl(var(--gantt-grid-major));
+ }
+
+:host ::ng-deep .vis-time-axis .vis-grid.vis-minor {
+   border-color: hsl(var(--gantt-grid-minor));
+}
+
+:host ::ng-deep .vis-background .vis-time-axis .vis-vertical.vis-odd {
+    background: hsl(0 0% 100% / 0);
+}
+
+:host ::ng-deep .vis-background .vis-time-axis .vis-vertical.vis-even {
+    background: hsl(0 0% 100% / 0.06);
+}
+
+/* operational-overlays plugin styles */
+
+/* Make overlays non-interactive so panning/zooming is smooth everywhere */
+:host ::ng-deep .vis-item.vis-background,
+:host ::ng-deep .vis-item.vis-background * {
+  pointer-events: none !important;
+}
+
+/* Maintenance (red) */
+:host ::ng-deep .vis-item.vis-background.bg-maintenance {
+  background: rgba(220, 38, 38, 0.22);
+  box-shadow: inset 0 0 0 1px rgba(220, 38, 38, 0.35);
+}
+:host ::ng-deep .vis-item.vis-background.bg-maintenance .vis-item-content {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: rgba(220, 38, 38, 0.25);
+  color: #fecaca;
+  position: absolute;
+  top: 6px;
+  left: 8px;
+}
+
+/* Tide window (blue) */
+:host ::ng-deep .vis-item.vis-background.bg-tide {
+  background: rgba(59, 130, 246, 0.18);
+  box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.28);
+}
+
+/* Alerts by kind (lane-level) */
+:host ::ng-deep .vis-item.alert-capacity .vis-item-content,
+:host ::ng-deep .vis-item.alert-lowWater .vis-item-content,
+:host ::ng-deep .vis-item.alert-safety .vis-item-content {
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 6px;
 }
