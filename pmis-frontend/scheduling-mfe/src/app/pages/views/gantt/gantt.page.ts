@@ -9,12 +9,22 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { GanttFacade } from '../../../state/gantt.facade';
-import { GanttGroup, GanttItem } from '../../../domain/gantt.models';
+import { GanttFacade } from '@state/gantt.facade';
+import { GanttGroup, GanttItem } from '@domain/gantt.models';
 
-import { TimelineAdapter } from '../../../timeline/timeline.adapter';
-import { DEFAULT_TIMELINE_FACTORY_PROVIDER } from '../../../timeline/timeline.factory';
+import { TimelineAdapter } from '@timeline/timeline.adapter';
+import { DEFAULT_TIMELINE_FACTORY_PROVIDER } from '@timeline/timeline.factory';
+
+/**
+ * Temp: Alias importing current not working with template type checker.
+ */
 import { BackgroundColumnsDirective } from '../../../timeline/plugins/background-columns.directive';
+import {
+    MaintenanceOverlayInput,
+    TideWindowInput,
+    AlertOverlayInput,
+} from '../../../timeline/plugins/operational-overlays.directive';
+
 
 /**
  * GanttPageComponent — thin container for the Scheduling Gantt view.
@@ -39,9 +49,7 @@ import { BackgroundColumnsDirective } from '../../../timeline/plugins/background
     ],
 })
 export class GanttPageComponent implements AfterViewInit {
-    /**
-     * Host element for the vis timeline; initialized by the adapter.
-     */
+    /** Host element for the vis timeline; initialized by the adapter. */
     @ViewChild('timeline', { static: true }) private timelineEl!: ElementRef<HTMLDivElement>;
 
     private readonly route = inject(ActivatedRoute);
@@ -49,14 +57,12 @@ export class GanttPageComponent implements AfterViewInit {
     private readonly facade = inject(GanttFacade);
     private readonly adapter = inject(TimelineAdapter);
 
-    /**
-     * Initialize the timeline, seed demo data, and hydrate view state from deep link if present.
-     */
+    /** Initialize the timeline, seed demo data, and hydrate view state from deep link if present. */
     ngAfterViewInit(): void {
         // Initialize vis via the adapter.
         this.adapter.init(this.timelineEl);
 
-        // Seed temporary demo data. Replace with real data loading in Phase 2.2.
+        // Seed temporary demo data. Replace with real data when API is ready.
         const groups: GanttGroup[] = [
             { id: 'LOCK_A', content: 'Locks A' },
             { id: 'LOCK_B', content: 'Locks B' },
@@ -113,10 +119,7 @@ export class GanttPageComponent implements AfterViewInit {
         return location.origin + this.router.serializeUrl(tree);
     }
 
-    /**
-     * Copy the current share URL to the clipboard.
-     * Falls back to logging when the Clipboard API is unavailable.
-     */
+    /** Copy the current share URL to the clipboard (logs as fallback). */
     async copyShareUrl(): Promise<void> {
         const url = this.getShareUrl();
         try {
@@ -139,4 +142,33 @@ export class GanttPageComponent implements AfterViewInit {
         const end = new Date(base); end.setHours(18, 0, 0, 0);
         return [start, end];
     }
+
+    // Could be plain arrays or signals/derived state.
+    maintenance: MaintenanceOverlayInput[] = [
+        {
+            at: new Date('2025-09-25T13:00:00'),
+            groupId: 'locks-a',
+            durationMinutes: 60,
+            label: 'Lock maintenance',
+        },
+    ];
+
+    tides: TideWindowInput[] = [
+        {
+            start: new Date('2025-09-25T05:00:00'),
+            end: new Date('2025-09-25T07:30:00'),
+            title: 'Bad tide window',
+            // omit groupId to span all rows
+        },
+    ];
+
+    alerts: AlertOverlayInput[] = [
+        {
+            start: new Date('2025-09-25T10:00:00'),
+            end: new Date('2025-09-25T11:00:00'),
+            kind: 'capacity',
+            groupId: 'tugs-lane',
+            label: 'Convoys > tugs',
+        },
+    ];
 }

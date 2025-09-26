@@ -28,11 +28,7 @@ export interface TimelineFactory {
     ): Timeline;
 }
 
-/**
- * DI token for resolving a {@link TimelineFactory}.
- *
- * @public
- */
+/** DI token for resolving a {@link TimelineFactory}. */
 export const TIMELINE_FACTORY = new InjectionToken<TimelineFactory>('TIMELINE_FACTORY');
 
 /**

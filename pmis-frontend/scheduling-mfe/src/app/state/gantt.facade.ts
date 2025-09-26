@@ -1,6 +1,6 @@
 import { Injectable, computed, effect, signal } from '@angular/core';
-import { GanttGroup, GanttItem } from '../domain/gantt.models';
-import { SessionStateService } from '../services/session-state.service';
+import { GanttGroup, GanttItem } from '@domain/gantt.models';
+import { SessionStateService } from '@services/session-state.service';
 
 /**
  * GanttFacade — single public API for the Scheduling Gantt feature.
@@ -16,38 +16,19 @@ import { SessionStateService } from '../services/session-state.service';
  */
 @Injectable({ providedIn: 'root' })
 export class GanttFacade {
-  // ---------- Domain state ----------
-
-  /**
-   * Current Gantt groups (rows).
-   */
+  /** Current Gantt groups (rows). */
   readonly groups = signal<GanttGroup[]>([]);
-
-  /**
-   * Current Gantt items (ranges/points).
-   */
+  /** Current Gantt items (ranges/points). */
   readonly items = signal<GanttItem[]>([]);
 
-  // ---------- View state ----------
-
-  /**
-   * Visible window start; `null` until initialized.
-   */
+  /** Visible window start; `null` until initialized. */
   readonly windowStart = signal<Date | null>(null);
-
-  /**
-   * Visible window end; `null` until initialized.
-   */
+  /** Visible window end; `null` until initialized. */
   readonly windowEnd = signal<Date | null>(null);
-
-  /**
-   * Selected (focused) item id; `null` if none.
-   */
+  /** Selected (focused) item id; `null` if none. */
   readonly focusId = signal<string | null>(null);
 
-  /**
-   * Derived `{ start, end }` once both ends exist; else `null`.
-   */
+  /** Derived `{ start, end }` once both ends exist; else `null`. */
   readonly window = computed(() => {
     const s = this.windowStart();
     const e = this.windowEnd();
@@ -83,35 +64,18 @@ export class GanttFacade {
     });
   }
 
-  // ---------- Public API ----------
-
-  /**
-   * Set the visible time window.
-   *
-   * @param start Window start (must be ≤ end).
-   * @param end Window end.
-   */
+  /** Set the visible time window. */
   setWindow(start: Date, end: Date): void {
     this.windowStart.set(start);
     this.windowEnd.set(end);
   }
 
-  /**
-   * Focus a specific item or clear focus.
-   *
-   * @param id Item id to select, or `null` to clear selection.
-   */
+  /** Focus a specific item or clear focus. */
   setFocus(id: string | null): void {
     this.focusId.set(id);
   }
 
-  /**
-   * Replace the current groups and items.
-   *
-   * @param groups New groups (rows).
-   * @param items New items (ranges/points).
-   * @remarks Prefer full replacement to in-place mutation for predictability.
-   */
+  /** Replace the current groups and items (prefer full replacement to mutation). */
   setData(groups: GanttGroup[], items: GanttItem[]): void {
     this.groups.set(groups);
     this.items.set(items);

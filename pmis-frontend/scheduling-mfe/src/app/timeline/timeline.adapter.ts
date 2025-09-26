@@ -10,8 +10,8 @@ import {
 } from '@angular/core';
 import { DataSet } from 'vis-data';
 import { DataGroup, DataItem, IdType, Timeline, TimelineOptions } from 'vis-timeline/standalone';
-import { GanttFacade } from '../state/gantt.facade';
-import { TIMELINE_FACTORY, TimelineFactory } from './timeline.factory';
+import { GanttFacade } from '@state/gantt.facade';
+import { TIMELINE_FACTORY, TimelineFactory } from '@timeline/timeline.factory';
 
 /**
  * TimelineAdapter — boundary to the vis-timeline library.
@@ -47,6 +47,9 @@ export class TimelineAdapter {
 
     /** IDs of background items we manage (alternating columns). */
     private bgIds: IdType[] = [];
+
+    /** IDs of operational overlays we manage (maintenance, tides, alerts, etc.). */
+    private overlayIds: IdType[] = [];
 
     /**
      * Wire façade ↔ vendor state reactively.
@@ -126,18 +129,54 @@ export class TimelineAdapter {
      * Replace the set of alternating background columns.
      *
      * @param items New background items (must specify `type: 'background'`).
-     *
      * @remarks
      * - Previously managed background items are removed before adding the new set.
      * - Foreground items are not affected.
+     * @deprecated We no longer generate stripe columns here. Use
+     * {@link setOperationalOverlays} for domain overlays (maintenance, tides, alerts).
+     * For a transitional period this method delegates to setOperationalOverlays so
+     * existing callers don’t break.
      */
     setBackgroundColumns(items: DataItem[]): void {
-        if (this.bgIds.length) {
-            this.items.remove(this.bgIds);
-            this.bgIds = [];
+        // Delegate so callers don’t crash during the refactor.
+        this.setOperationalOverlays(items);
+    }
+
+    /**
+     * Replace the set of **operational overlays** (e.g., lock maintenance windows,
+     * tide windows, capacity alerts). Overlays are added to the same DataSet the
+     * timeline uses, so vis updates immediately.
+     *
+     * @param items Overlay items to render.
+     *   - Use `type: 'background'` for row- or timeline-spanning windows.
+     *   - Use `type: 'range'` for lane-level markers/alerts.
+     *   - Set `group` to constrain to a single row; omit to span all rows.
+     *   - Always set `editable:false` and `selectable:false`.
+     *
+     * @remarks
+     * - Previously injected overlays (tracked via {@link overlayIds}) are removed first.
+     * - Foreground items are not touched.
+     * - Note: your existing `facade.items()` effect clears the whole DataSet. That will
+     *   remove overlays too. Ensure the overlays directive re-applies overlays whenever
+     *   its inputs change **or** when `facade.items()` pushes a new set.
+     */
+    setOperationalOverlays(items: DataItem[]): void {
+        if (this.overlayIds.length) {
+            this.items.remove(this.overlayIds);
+            this.overlayIds = [];
         }
         if (!items.length) return;
         this.items.add(items);
-        this.bgIds = items.map(i => i.id!) as IdType[];
+        this.overlayIds = items.map(i => i.id!) as IdType[];
+    }
+
+    /**
+     * Remove all currently managed operational overlays.
+     * Foreground items remain untouched.
+     */
+    clearOperationalOverlays(): void {
+        if (!this.overlayIds.length) return;
+        this.items.remove(this.overlayIds);
+        this.overlayIds = [];
     }
 }
