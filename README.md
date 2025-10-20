@@ -13,6 +13,7 @@ pmis-frontend/
 pmis-backend/
   api-gateway/
   scheduling/
+pmis-docs/
 ```
 
 ## Prerequisites
